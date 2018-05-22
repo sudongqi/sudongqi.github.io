@@ -148,7 +148,12 @@ $$
 
 $$
 \begin{align}
-	Tanh(x_i) &= \frac{e^{x_i} + e^{-x_i}}{e^{x_i} - e^{-x_i}} \tag{element-wise operation on x} \\
+	Tanh(x_i) &= \frac{e^{x_i} + e^{-x_i}}{e^{x_i} - e^{-x_i}} \tag{element-wise operation on x}
+\end{align}
+$$
+
+$$
+\begin{align}
 	\frac{dTanh(x_i)}{dx_i} &= \frac{(e^{x_i} + e^{-x_i})(e^{x_i} + e^{-x_i}) + (e^{x_i} - e^{-x_i})(e^{x_i} - e^{-x_i})}{(e^{x_i} + e^{-x_i})^2} \tag{the quotinet rule} \\
 	\frac{dTanh(x_i)}{dx_i} &= 1 + (\frac{e^{x_i} - e^{-x_i}}{e^{x_i} + e^{-x_i}})^2 \tag{$(\frac{e^{x_i} + e^{-x_i}}{e^{x_i} + e^{-x_i}})^2 = 1$} \\
 	\frac{dTanh(x_i)}{dx_i} &= 1 + tan(x_i)^2 \tag{substitution}
