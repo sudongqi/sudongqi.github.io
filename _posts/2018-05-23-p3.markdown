@@ -1,0 +1,55 @@
+---
+layout: post
+title:  "Least square estimation for Linear Regression"
+date:   2018-05-23 17:05:00 -0700
+categories: jekyll update
+---
+
+#### __Abstract__
+
+This post shows how to derive the closed form solution of least square estimation for linear regression
+
+#### __Scalar by Vector Differentiation__
+
+$$
+\begin{align}
+	\frac{d Ax}{dx} &= A \tag{when A is not a function of x} \\
+	\frac{dx^T Ax}{dx} &= 2Ax \tag{when A is symmetric} \\
+	A &= A^T \tag{Definition of symmetric matrix A} \\
+	X^T X &= (X^T X)^T \tag{for any $X \in R^{m \times n}$, $X^T X$ is symmetric}
+\end{align}
+$$
+
+#### __Forward Process__
+
+$$
+\begin{align}
+	X &\in R^{m \times n} \tag{training data with m instances} \\
+	y &\in R^{m} \tag{labels for m instances} \\
+	\theta &\in R^{n} \tag{regression coefficients as parameters} \\
+	X\theta &= \hat{y} \tag{during test time} \\
+	J(\theta) &= (X\theta - y)^T(X\theta - y) \tag{objective function: Least Square}
+\end{align}
+$$
+
+#### __Get $$\theta$$ when $$\frac{d J(\theta)}{d \theta} = 0$$__
+
+$$
+\begin{align}
+	J(\theta) &= ((X\theta)^T - y^T)(X\theta - y) \nonumber \\
+	J(\theta) &= (X\theta)^T X\theta - (X\theta)^T y - y^T X\theta + y^T y \nonumber \\
+	J(\theta) &= \theta^T X^T X\theta - 2 (X\theta)^T y + y^T y \tag{$(X\theta)^T y = y^T X\theta$} \\
+	\frac{d J(\theta)}{d \theta} &= 2 X^T X \theta - 2 X^T y \tag{matrix calculus, $X^T X$ is symmetric} \\
+	0 &= 2 X^T X \theta - 2 X^T y \tag{when $\frac{d J(\theta)}{d \theta} = 0$, $J(\theta)$ was minimized} \\
+	X^T X \theta &= X^T y \nonumber \\
+	\theta &= (X^T X)^{-1} X^T y \tag{Least square estimation of $\theta$}
+\end{align}
+$$
+
+
+
+
+
+
+
+
