@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Derivative for common neural network modules"
+title:  "Derivative of common neural network modules"
 date:   2018-05-22 00:58:43 -0700
-categories: jekyll update
+categories: ML
 ---
 
 #### __Abstract__

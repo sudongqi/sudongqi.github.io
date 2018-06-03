@@ -15,6 +15,7 @@ layout: default
 			{%- for post in site.posts -%}
 			<li>
 				<h3>
+				    <span class="post-categories"> [{{ post.categories[0] | escape }}] </span>
 					<a style="display: inline" class="post-link" href="{{ post.url | relative_url }}">
 						{{ post.title | escape }}
 					</a>
