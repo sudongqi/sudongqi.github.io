@@ -40,7 +40,7 @@ $$
 (2) is greater than or equal to (3) because Jensen's inequaitliy states that $$f(E[Y]) \geq E[f(Y)]$$ 
 if $$f$$ is a concave function (for more details, look at [Andrew's note]). 
 In our case, $$f$$ is $$log$$ and $$Y$$ is $$\frac{p(x_i , z_i; \theta)}{q(z_i)}$$. Using (3) as a lower bound 
-of (2), we want to raise (2) as close as possible to (3) such that (2) $$=$$ (3) to maximize the likelihood. 
+of (2), we want to raise (3) as close as possible to (2) such that (3) $$=$$ (2) to maximize the likelihood. 
 For this, Jensen's inequality also states that when $$Y$$ is constant, $$f(E[Y]) = E[f(Y)]$$. 
 Therefore, we can construct $$q$$ such that Y is equal to some constant c as follow
 
