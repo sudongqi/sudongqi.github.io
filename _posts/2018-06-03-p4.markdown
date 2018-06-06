@@ -54,13 +54,13 @@ $$
     \frac{\sum_{z} p(x_i , z_i; \theta)}{\sum_{z} q(z_i)} = c \tag{5}
 $$
 
-Given $$q(z_i)$$ is a probability and $$\sum_z q(z_i) = 1$$, we have
+Given $$q(z_i)$$ is a probability distribution and $$\sum_z q(z_i) = 1$$, we have
 
 $$
     c = \sum_{z} p(x_i , z_i; \theta) = p(x_i; \theta) \tag{6}
 $$
 
-Therefore, $$q(z_i)$$ can be written down as follow
+Therefore, $$q(z_i)$$ can be written as follow
 
 $$
     q(z_i) = \frac{p(x_i , z_i; \theta)}{p(x_i; \theta)} = p(z_i | x_i; \theta) \tag{7}
