@@ -1,0 +1,88 @@
+---
+layout: post
+title:  "Expectation Maximization from Jensen's inequality"
+date:   2018-06-03 23:00:00 -0700
+categories: ML
+---
+
+#### __Abstract__
+In this post we introduce a common view on Expectation Maximization using Jensen's inequality.
+
+#### __Reference__
+[Andrew's note]: http://cs229.stanford.edu/notes/cs229-notes8.pdf
+
+[Andrew's note]
+
+#### __EM and maximum likelihood estimation__
+The goal of EM is to maximize the probability of observed variable X explained by hidden variable Z under a model with 
+parameters $$\theta$$. Noted that when Z is known (usually as labels), this problem becomes a supervised learning problem and 
+it can be solved directly using maximum likelihood estimaation instead of EM. For a training dataset with size $$N$$, the log likelihood of
+a dataset with instances $$x_1$$, $$x_2$$, ... $$x_N$$ is given by:
+
+$$
+\begin{align}
+    l(\theta) &= \sum_{x} \log p(x_i ; \theta) \\
+              &= \sum_{x} \log \sum_{z} p(x_i , z_i; \theta) \tag{1}
+\end{align}
+$$
+
+#### __Derivation from Jensen's inequality__
+Starting from (1), derivation using Jensen's inequality adds a "helper" distribution $$q$$ such that
+
+$$
+\begin{align}
+    l(\theta) &= \sum_{x} \log \sum_{z} p(x_i , z_i; \theta)  \\
+              &= \sum_{x} \log \sum_{z} \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{2} \\
+              & \geq \sum_{x} \sum_{z} \log \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{3}
+\end{align}
+$$
+
+(2) is greater than or equal to (3) because Jensen's inequaitliy states that $$f(E[Y]) \geq E[f(Y)]$$ 
+if $$f$$ is a concave function (for more details, look at [Andrew's note]). 
+In our case, $$f$$ is $$log$$ and $$Y$$ is $$\frac{p(x_i , z_i; \theta)}{q(z_i)}$$. Using (3) as a lower bound 
+of (2), we want to raise (2) as close as possible to (3) such that (2) $$=$$ (3) to maximize the likelihood. 
+For this, Jensen's inequality also states that when $$Y$$ is constant, $$f(E[Y]) = E[f(Y)]$$. 
+Therefore, we can construct $$q$$ such that Y is equal to some constant c as follow
+
+$$
+    Y = \frac{p(x_i , z_i; \theta)}{q(z_i)} = c \tag{4}
+$$ 
+
+If we assume each instance has the same constant c, then we have
+
+$$
+    \frac{\sum_{z} p(x_i , z_i; \theta)}{\sum_{z} q(z_i)} = c \tag{5}
+$$
+
+Given $$q(z_i)$$ is a probability and $$\sum_z q(z_i) = 1$$, we have
+
+$$
+    c = \sum_{z} p(x_i , z_i; \theta) = p(x_i; \theta) \tag{6}
+$$
+
+Therefore, $$q(z_i)$$ can be written down as follow
+
+$$
+    q(z_i) = \frac{p(x_i , z_i; \theta)}{p(x_i; \theta)} = p(z_i | x_i; \theta) \tag{7}
+$$
+
+#### __Expectation Maximization__
+(7) is our E step
+
+$$
+    q(z_i) = p(z_i | x_i; \theta) \tag{E-step}
+$$
+
+Using (7) to replace $$q(z_i)$$ in (3), we obtain our M step
+
+$$
+    \operatorname*{argmax}_{\theta} \sum_{x} \sum_{z} \log \frac{p(z_i | x_i; \theta) p(x_i , z_i; \theta)}{p(z_i | x_i; \theta)} \tag{M-step}
+$$
+
+#### *__Notes__*
+For (5), it seems this assumption is necessary but ignored from [Andrew's note] and some other sources. 
+How does such assumption affect the construction of $$q(z_i)$$?
+
+
+
+

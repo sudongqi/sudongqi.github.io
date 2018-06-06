@@ -1,0 +1,20 @@
+---
+layout: post
+title:  "Expectation Maximization from KL divergence (WIP)"
+date:   2018-06-05 23:00:00 -0700
+categories: ML
+---
+
+#### __Abstract__
+In this post we introduce an alternative view on Expectation Maximization using KL-divergence by Jianlin from 
+<https://kexue.fm/>. Unlike the common view on EM using Jensen's inequality, the derivation of EM using KL-divergence 
+is shorter and much more intuitive in my opinion. 
+
+#### __Reference__
+[Jianlin's blog post]: https://kexue.fm/archives/5239
+
+[Jianlin's blog post] (written in Chinese)
+
+#### __KL Divergence and likelihood estimation__
+
+(work in progress)
