@@ -8,13 +8,29 @@ categories: ML
 #### __Abstract__
 In this post we introduce an alternative view on Expectation Maximization using KL-divergence by Jianlin from 
 <https://kexue.fm/>. Unlike the common view on EM using Jensen's inequality, the derivation of EM using KL-divergence 
-is shorter and much more intuitive in my opinion. 
+is shorter and much more intuitive. 
 
 #### __Reference__
-[Jianlin's blog post]: https://kexue.fm/archives/5239
+[Jianlin's post]: https://kexue.fm/archives/5239
+[previous post]: {% post_url 2018-06-03-p4 %}
 
-[Jianlin's blog post] (written in Chinese)
+[Jianlin's post] (written in Chinese)
 
-#### __KL Divergence and likelihood estimation__
+#### __KL Divergence and maximum likelihood estimation__
+From our [previous post] about EM, 
+we know that EM's objective is to maximizing the expected log likelihood of the training dataset. 
+In here, we want to expand the concept to show that 
+such optimization as a special case of a more general form of optimization: minimizing the KL divergence.
+Given two probability distribution $$p(x)$$ and $$q(x)$$, KL measure how close $$q(x)$$ is to $$p(x)$$ as follow
 
-(work in progress)
+$$
+\begin{align}
+    {KL} (p(x) \parallel q(x)) &= \sum_x p(x) \log \frac{p(x)}{q(x)}
+\end{align}
+$$
+
+(Work in Progress)
+
+
+
+ 
