@@ -33,7 +33,7 @@ $$
 \begin{align}
     \operatorname*{argmax}_{\theta} \mathbb{E}_x (\log p(x_i ; \theta)) &= \operatorname*{argmax}_{\theta} n \cdot \mathbb{E}_x (\log p(x_i ; \theta)) \\
                                                                         &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log p(x_i ; \theta) \\
-                                                                        &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log \sum_{z} p(x_i , z_i; \theta) \\
+                                                                        &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log \sum_{z_i} p(x_i , z_i; \theta) \\
                                                                         &= \operatorname*{argmax}_{\theta} l(\theta) \tag{1}
 \end{align}
 $$
@@ -44,9 +44,9 @@ Starting from (1), derivation using Jensen's inequality adds a "helper" distribu
 
 $$
 \begin{align}
-    l(\theta) &= \sum_{i=1}^{n} \log \sum_{z} p(x_i , z_i; \theta)  \\
-              &= \sum_{i=1}^{n} \log \sum_{z} \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{2} \\
-              & \geq \sum_{i=1}^{n} \sum_{z} \log \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{3}
+    l(\theta) &= \sum_{i=1}^{n} \log \sum_{z_i} p(x_i , z_i; \theta)  \\
+              &= \sum_{i=1}^{n} \log \sum_{z_i} \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{2} \\
+              & \geq \sum_{i=1}^{n} \sum_{z_i} \log \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{3}
 \end{align}
 $$
 
@@ -65,13 +65,13 @@ $$
 If we assume each instance has the same corresponding constant c, then we have
 
 $$
-    \frac{\sum_{z} p(x_i , z_i; \theta)}{\sum_{z} q(z_i)} = c \tag{5}
+    \frac{\sum_{z_i} p(x_i , z_i; \theta)}{\sum_{z_i} q(z_i)} = c \tag{5}
 $$
 
-Given $$q(z_i)$$ is a probability distribution and $$\sum_z q(z_i) = 1$$, we have
+Given $$q(z_i)$$ is a probability distribution and $$\sum_{z_i} q(z_i) = 1$$, we have
 
 $$
-    c = \sum_{z} p(x_i , z_i; \theta) = p(x_i; \theta) \tag{6}
+    c = \sum_{z_i} p(x_i , z_i; \theta) = p(x_i; \theta) \tag{6}
 $$
 
 Therefore, $$q(z_i)$$ can be written as follow
@@ -90,7 +90,7 @@ $$
 Using (7) to replace $$q(z_i)$$ in (3), we obtain our M step
 
 $$
-    \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z} \log \frac{p(z_i | x_i; \theta) p(x_i , z_i; \theta)}{p(z_i | x_i; \theta)} \tag{M-step}
+    \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z_i} \log \frac{p(z_i | x_i; \theta) p(x_i , z_i; \theta)}{p(z_i | x_i; \theta)} \tag{M-step}
 $$
 
 #### *__Notes__*
