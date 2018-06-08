@@ -23,7 +23,7 @@ a dataset with instances $$x_1$$, $$x_2$$, ... $$x_n$$ drawn from distribution $
 
 $$
 \begin{align}
-    \mathbb{E}_x (\log p(x_i ; \theta)) \approx \frac{1}{n} \sum_{i=1}^{n} \log p(x_i ; \theta), \quad x_i \sim p_{true}(x) \tag{0}
+    \mathbb{E}_x (\log p_{\theta}(x)) \approx \frac{1}{n} \sum_{i=1}^{n} \log p_{\theta}(x_i), \quad x_i \sim p_{true}(x) \tag{0}
 \end{align}
 $$
 
@@ -31,9 +31,9 @@ Our objective is to maximize (0) by adjusting $$\theta$$
 
 $$
 \begin{align}
-    \operatorname*{argmax}_{\theta} \mathbb{E}_x (\log p(x_i ; \theta)) &= \operatorname*{argmax}_{\theta} n \cdot \mathbb{E}_x (\log p(x_i ; \theta)) \\
-                                                                        &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log p(x_i ; \theta) \\
-                                                                        &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log \sum_{z_i} p(x_i , z_i; \theta) \\
+    \operatorname*{argmax}_{\theta} \mathbb{E}_x (\log p_{\theta}(x_i)) &= \operatorname*{argmax}_{\theta} n \cdot \mathbb{E}_x (\log p_{\theta}(x_i)) \\
+                                                                        &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log p_{\theta}(x_i) \\
+                                                                        &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \log \sum_{z_i} p_{\theta}(x_i , z_i) \\
                                                                         &= \operatorname*{argmax}_{\theta} l(\theta) \tag{1}
 \end{align}
 $$
@@ -44,9 +44,9 @@ Starting from (1), derivation using Jensen's inequality adds a "helper" distribu
 
 $$
 \begin{align}
-    l(\theta) &= \sum_{i=1}^{n} \log \sum_{z_i} p(x_i , z_i; \theta)  \\
-              &= \sum_{i=1}^{n} \log \sum_{z_i} \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{2} \\
-              & \geq \sum_{i=1}^{n} \sum_{z_i} \log \frac{q(z_i) p(x_i , z_i; \theta)}{q(z_i)} \tag{3}
+    l(\theta) &= \sum_{i=1}^{n} \log \sum_{z_i} p_{\theta}(x_i , z_i)  \\
+              &= \sum_{i=1}^{n} \log \sum_{z_i} \frac{q(z_i) p_{\theta}(x_i , z_i)}{q(z_i)} \tag{2} \\
+              & \geq \sum_{i=1}^{n} \sum_{z_i} q(z_i) \log \frac{p_{\theta}(x_i , z_i)}{q(z_i)} \tag{3}
 \end{align}
 $$
 
@@ -59,38 +59,43 @@ For this, Jensen's inequality also states that when $$Y$$ is constant, $$f(E[Y])
 Therefore, we can construct $$q$$ such that Y is equal to some constant c as follow
 
 $$
-    Y = \frac{p(x_i , z_i; \theta)}{q(z_i)} = c \tag{4}
+    Y = \frac{p_{\theta}(x_i , z_i)}{q(z_i)} = c \tag{4}
 $$ 
 
 If we assume each instance has the same corresponding constant c, then we have
 
 $$
-    \frac{\sum_{z_i} p(x_i , z_i; \theta)}{\sum_{z_i} q(z_i)} = c \tag{5}
+    \frac{\sum_{z_i} p_{\theta}(x_i , z_i)}{\sum_{z_i} q(z_i)} = c \tag{5}
 $$
 
 Given $$q(z_i)$$ is a probability distribution and $$\sum_{z_i} q(z_i) = 1$$, we have
 
 $$
-    c = \sum_{z_i} p(x_i , z_i; \theta) = p(x_i; \theta) \tag{6}
+    c = \sum_{z_i} p_{\theta}(x_i , z_i) = p_{\theta}(x_i) \tag{6}
 $$
 
 Therefore, $$q(z_i)$$ can be written as follow
 
 $$
-    q(z_i) = \frac{p(x_i , z_i; \theta)}{p(x_i; \theta)} = p(z_i | x_i; \theta) \tag{7}
+    q(z_i) = \frac{p_{\theta}(x_i , z_i)}{p_{\theta}(x_i)} = p_{\theta}(z_i | x_i) \tag{7}
 $$
 
 #### __Expectation Maximization__
 (7) is our E step
 
 $$
-    q(z_i) = p(z_i | x_i; \theta) \tag{E-step}
+    q(z_i) = p_{\theta}(z_i | x_i) \tag{E-step}
 $$
 
-Using (7) to replace $$q(z_i)$$ in (3), we obtain our M step
+Using (7) to replace $$q(z_i)$$ in (3), we obtain our M step assuming $$p_{\theta}(x_i \vert z_i)$$ is constant
 
 $$
-    \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z_i} \log \frac{p(z_i | x_i; \theta) p(x_i , z_i; \theta)}{p(z_i | x_i; \theta)} \tag{M-step}
+\begin{align}
+    \theta_{new} &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z_i} p_{\theta}(z_i | x_i) \log \frac{p_{\theta}(x_i , z_i)}{p_{\theta}(z_i | x_i)} \\
+                 &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z_i} p_{\theta}(z_i | x_i) \log p_{\theta}(x_i , z_i) - \sum_{z_i} p_{\theta}(z_i | x_i) \log p_{\theta}(z_i | x_i) \\
+                 &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z_i} p_{\theta}(z_i | x_i) \log p_{\theta}(x_i , z_i) - C \\
+                 &= \operatorname*{argmax}_{\theta} \sum_{i=1}^{n} \sum_{z_i} p_{\theta}(z_i | x_i) \log p_{\theta}(x_i , z_i) \tag{M-step}
+\end{align}
 $$
 
 #### *__Notes__*
