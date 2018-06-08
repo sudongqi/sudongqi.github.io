@@ -7,8 +7,8 @@ categories: ML
 
 #### __Abstract__
 In this post we introduce an alternative view on Expectation Maximization using KL-divergence by Jianlin from 
-<https://kexue.fm/>. Unlike the common view on EM using Jensen's inequality, the derivation of EM using KL-divergence 
-is shorter and much more intuitive. 
+<https://kexue.fm>. Unlike the common view on EM using Jensen's inequality, the derivation of EM using KL-divergence 
+is shorter and more intuitive. 
 
 #### __Reference__
 [Jianlin's post]: https://kexue.fm/archives/5239
@@ -21,7 +21,7 @@ From our [previous post] about EM,
 we know that EM's objective is to maximizing the expected log likelihood of the training dataset. 
 In here, we want to expand the concept to show that 
 such optimization is a special case of a more general form of optimization: minimizing the KL divergence.
-Given two probability distribution $$p(x)$$ and $$q(x)$$, KL measure how close $$q(x)$$ is to $$p(x)$$ as follow
+Given two probability distribution $$p(x)$$ and $$q(x)$$, KL measure how close $$q(x)$$ is to $$p(x)$$
 
 $$
 \begin{align}
@@ -29,9 +29,9 @@ $$
 \end{align}
 $$
 
-To derive EM algorithm using the concept of KL divergence, 
+To derive EM using the concept of KL divergence, 
 let's say we want to use $$p_{\theta}(x)$$ to approximate the underlying distribution of the training dataset $$p_{true}(x)$$. 
-Given that $$p_{true}(x)$$ is known (as constant) via training dataset, 
+Given that $$p_{true}(x)$$ is known (as constant), 
 minimizing the KL divergence is equivalent to maximizing the expected log likelihood of the training dataset.
 
 $$
@@ -45,10 +45,10 @@ $$
 \end{align}
 $$
 
-(0) is the objective of the general EM algorithm.
+where (0) is the objective of the general EM algorithm.
 
 #### __KL divergence of joint probability__
-Incorporating the hidden variable Z that are used to explain X, we rewrite our objective using the joint probability of X and Z
+Incorporating the hidden variable Z that are used to explain X, we can rewrite our objective using the joint probability of X and Z
 
 $$
 \begin{align}
@@ -64,8 +64,8 @@ $$
 
 #### __Expectation maximization from KL divergence__
 
-To minimize (1), there are two terms we can optimize: $$p_{true}(z | x)$$ and $$p_{\theta}(z|x)p_{\theta}(x)$$. 
-Similar to EM, we can optimize one part assuming the other part is constant and we can optimize them interchangeably.
+To minimize (1), there are two terms we can adjust: $$p_{true}(z | x)$$ and $$p_{\theta}(z|x)p_{\theta}(x)$$. 
+Similar to EM, we can optimize one part assuming the other part is constant and we can do this interchangeably.
 So, if we assume $$p_{\theta}(z|x)p_{\theta}(x)$$ is known, $$p_{true}(z | x)$$ can be adjust to minimize (1) as follow
 
 $$
@@ -79,7 +79,7 @@ $$
 $$
 
 from (2) to (E-step), we need to use the fact that $${KL}(p_{\theta}(z \vert x) \parallel p_{\theta}(z \vert x)) = 0$$.
-For M step, we minimize (1) assuming $$p_{true}(z \vert x)$$ is constant and equal to $$p_{\theta}(z \vert x)$$
+For M step, we assume $$p_{true}(z \vert x)$$ is constant and is equal to $$p_{\theta}(z \vert x)$$
 
 $$
 \begin{align}
@@ -90,7 +90,7 @@ $$
 \end{align}
 $$
 
-
+The above results are identical to the defintion of EM algorithm.
 
 
 
