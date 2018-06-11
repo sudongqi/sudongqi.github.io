@@ -23,7 +23,7 @@ $$
 
 $$
 \begin{align}
-	(\frac{f}{g})^{'} &= \frac{f^{'}g + fg^{'}}{g^2} \tag{the quotinet rule} \\
+	(\frac{f}{g})^{'} &= \frac{f^{'}g + fg^{'}}{g^2} \tag{the quotient rule} \\
 	(\sum_{i=1}^{n} f_i)^{'} &= {f_1}^{'}+{f_2}^{'}+ ...{f_n}^{'} \tag{derivative of summation} \\
 	(\log f)^{'} &= \frac{1}{f} \tag{when log base = e} \\
 	\frac{df}{dg} &= \frac{df}{dh} \frac{dh}{dg} \tag{chain rule} \\
@@ -70,7 +70,7 @@ $$
 		\vec{\frac{dL}{dy}_{2*}} \cdot \vec{W_{1*}} & \vec{\frac{dL}{dy}_{2*}} \cdot \vec{W_{2*}} & \dots  & \vec{\frac{dL}{dy}_{2*}} \cdot \vec{W_{m*}} \\
 		\vdots & \vdots & \ddots & \vdots \\
 		\vec{\frac{dL}{dy}_{k*}} \cdot \vec{W_{1*}} & \vec{\frac{dL}{dy}_{k*}} \cdot \vec{W_{2*}} & \dots  & \vec{\frac{dL}{dy}_{k*}} \cdot \vec{W_{m*}}
-	\end{bmatrix} \tag{subsitution} \\
+	\end{bmatrix} \tag{substitution} \\
 	&=
 	\begin{bmatrix}
 		\vec{\frac{dL}{dy}_{1*}} \\
@@ -154,7 +154,7 @@ $$
 
 $$
 \begin{align}
-	\frac{dTanh(x_i)}{dx_i} &= \frac{(e^{x_i} + e^{-x_i})(e^{x_i} + e^{-x_i}) + (e^{x_i} - e^{-x_i})(e^{x_i} - e^{-x_i})}{(e^{x_i} + e^{-x_i})^2} \tag{the quotinet rule} \\
+	\frac{dTanh(x_i)}{dx_i} &= \frac{(e^{x_i} + e^{-x_i})(e^{x_i} + e^{-x_i}) + (e^{x_i} - e^{-x_i})(e^{x_i} - e^{-x_i})}{(e^{x_i} + e^{-x_i})^2} \tag{the quotient rule} \\
 	\frac{dTanh(x_i)}{dx_i} &= 1 + (\frac{e^{x_i} - e^{-x_i}}{e^{x_i} + e^{-x_i}})^2 \tag{$(\frac{e^{x_i} + e^{-x_i}}{e^{x_i} + e^{-x_i}})^2 = 1$} \\
 	\frac{dTanh(x_i)}{dx_i} &= 1 + tan(x_i)^2 \tag{substitution}
 \end{align}
