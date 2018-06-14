@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "Common concepts of variance in Machine Learning (WIP)"
+date:   2018-06-14 10:00:00 -0700
+categories: MA
+---
+
+#### __Abstract__
+In this post we introduce a few common concepts of variance used in machine learning.
+Specifically, the usage of variance in regression problem.
+
+#### __Reference__
+[Bias Variance Tradeoff]: https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff
+[Bessel's correction]: https://www.youtube.com/watch?v=D1hgiAla3KI
+
+[Bias Variance Tradeoff]
+
+[Bessel's correction]
+
+#### __Variance in regression__
+(work in progress)
