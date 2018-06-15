@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about/
 ---
-[author's home page](http://sudongqi.com/#/)
+[Author's homepage](http://sudongqi.com/#/)
 
 #### __Talk is cheap. Show me the math__
 This blog collects, refines and presents math concepts behind machine learning in a minimalistic way.
