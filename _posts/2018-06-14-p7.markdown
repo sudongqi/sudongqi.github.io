@@ -1,7 +1,106 @@
 ---
 layout: post
-title:  "机器学习术语中英对照表（WIP）"
+title:  "机器学习常见术语中英对照表"
 date:   2018-06-14 11:00:00 -0700
 categories: NA
 ---
-(Work in progress)
+### __机器学习__
+* Loss function 损失函数
+* Regularization 正则化
+* Overfitting 过拟合
+* Underfitting 欠拟合
+* Generalization 泛化
+* Expectation 期望值/数学期望
+* Variance 方差
+* Bias 偏差
+* Error 误差
+* Residual 残差
+* Regression 回归
+* Classification 分类 
+* Feature selection 特征选择
+* Pattern recognition 模式识别
+* Supervised learning 监督学习
+* Unsupervised learning 无监督学习
+* Reinforcement learning 强化学习
+* Discriminative Model 判别模型
+* Generative Model 生成模型
+* Clustering 聚类
+* Bootstrap Method 自助抽样法
+* Ensemble learning 集成学习
+* Least Squares Estimation 最小二乘估计
+* Maximum Likelihood Estimation 最大拟然估计
+* Expectation Maximization 期望最大化
+* Closed-form solution 闭合解/解析解
+
+### __传统机器学习模型__
+* Linear Regression 线性回归
+* Logistic regression 逻辑回归
+* Support Vector Machine 支持向量机
+* Perception 感知机
+* Decision Tree 决策树
+* Gradient Boosting 梯度提升
+* Gradient Boosting Decision Tree 梯度提升决策树
+* Random Forest 随机森林
+* Gaussian Mixed Model 混合高斯模型
+* K-means clustering K均值聚类
+
+### __概率图模型__
+* Distribution 分布
+* Conditional distribution 条件分布 
+* Joint distribution 联合分布
+* Marginal distribution 边缘分布
+* Binomial distribution 二项分布
+* Bernoulli distribution 伯努利分布
+* Categorical distribution 分类分布
+* Multinomial distribution 多项分布
+* Gamma distribution 伽玛分布
+* Beta distribution 贝塔分布
+* Dirichlet distribution 狄利克雷分布
+* Gaussian distribution 高斯分布
+* Bayes' Rule 贝叶斯法则
+* Prior probability 先验概率
+* Conjugate prior 共轭先验
+* Posterior probability 后验概率
+* Cross Entropy 交叉熵
+* Negative Log likelihood 负对数拟然
+* KL divergence 相对熵/KL散度
+* Sampling 抽样
+* Importance Sampling 重要性抽样
+* Gibbs Sampling 吉布斯抽样
+* Random Walk 随机游走
+* Monte Carlo Method 蒙特卡罗方法
+* Markov Chain Monte Carlo 马尔科夫蒙特卡罗
+* Detailed Balance Condition 细致平衡条件
+* Variational inference 变分推断
+* Naive Bayes 朴素贝叶斯
+* Probabilistic Graphical Model 概率图模型
+* Hidden Markov Model 隐马尔科夫模型
+* Conditional Random Field 条件随机场
+
+### __深度学习__
+* Forward propagation 正向传播
+* Backward propagation 反向传播
+* Gradient 梯度
+* Stochastic Gradient Descent 随机梯度下降
+* Convergence 收敛
+* Convex function 凸函数
+* Activation Function 激活函数
+* layer 层
+* Tensor 张量
+* Hyperparameter 超参数
+* Batches 批次
+* Epochs 周期
+* Pooling 池化
+* Padding 填充
+* Dropout 丢弃法
+* Embedding 嵌套
+* Batch normalization 批量归一化
+* Neural Network 神经网络
+* Residual Network 残差网络
+* Recurrent Neural Network 递归神经网络/循环神经网络
+* Long Short-Term memory 长短时记忆
+* Convolutional Neural Network 卷积神经网络
+* Variational Autoencoder 变分自动编码器
+* Generative Adversarial Network 生成对抗网络
+
+(未完)
