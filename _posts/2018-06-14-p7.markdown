@@ -83,22 +83,27 @@ categories: NA
 * Gradient 梯度
 * Stochastic Gradient Descent 随机梯度下降
 * Convergence 收敛
-* Convex function 凸函数
+* Convex optimization 凸优化
+* Non-convex optimization 非凸优化
 * Activation Function 激活函数
-* layer 层
+* Neuron 神经元
+* Weight 权重
+* hidden layer 隐藏层
 * Tensor 张量
 * Hyperparameter 超参数
 * Batches 批次
 * Epochs 周期
 * Pooling 池化
-* Padding 填充
+* Padding 填充/补白
 * Dropout 丢弃法
 * Embedding 嵌套
+* Initialization 初始化
 * Batch normalization 批量归一化
 * Neural Network 神经网络
 * Residual Network 残差网络
 * Recurrent Neural Network 递归神经网络/循环神经网络
 * Long Short-Term memory 长短时记忆
+* Backpropagation through time 沿时反向传播
 * Convolutional Neural Network 卷积神经网络
 * Variational Autoencoder 变分自动编码器
 * Generative Adversarial Network 生成对抗网络
