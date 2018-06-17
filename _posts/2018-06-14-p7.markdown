@@ -72,8 +72,8 @@ categories: NA
 * Markov Chain Monte Carlo 马尔科夫蒙特卡罗
 * Detailed Balance Condition 细致平衡条件
 * Variational inference 变分推断
-* Naive Bayes 朴素贝叶斯
 * Probabilistic Graphical Model 概率图模型
+* Naive Bayes 朴素贝叶斯
 * Hidden Markov Model 隐马尔科夫模型
 * Conditional Random Field 条件随机场
 
