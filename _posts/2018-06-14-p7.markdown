@@ -36,7 +36,7 @@ categories: NA
 * Linear Regression 线性回归
 * Logistic regression 逻辑回归
 * Support Vector Machine 支持向量机
-* Perception 感知机
+* Perceptron 感知机
 * Decision Tree 决策树
 * Gradient Boosting 梯度提升
 * Gradient Boosting Decision Tree 梯度提升决策树
