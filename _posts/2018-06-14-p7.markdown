@@ -34,7 +34,7 @@ categories: NA
 
 ### __传统机器学习模型__
 * Linear Regression 线性回归
-* Logistic regression 逻辑回归
+* Logistic Regression 逻辑回归
 * Support Vector Machine 支持向量机
 * Perceptron 感知机
 * Decision Tree 决策树
@@ -62,7 +62,7 @@ categories: NA
 * Conjugate prior 共轭先验
 * Posterior probability 后验概率
 * Cross Entropy 交叉熵
-* Negative Log likelihood 负对数拟然
+* Negative Log Likelihood 负对数拟然
 * KL divergence 相对熵/KL散度
 * Sampling 抽样
 * Importance Sampling 重要性抽样
