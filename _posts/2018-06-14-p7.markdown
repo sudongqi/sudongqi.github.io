@@ -22,10 +22,10 @@ categories: NA
 * Supervised learning 监督学习
 * Unsupervised learning 无监督学习
 * Reinforcement learning 强化学习
-* Discriminative Model 判别模型
-* Generative Model 生成模型
+* Discriminative model 判别模型
+* Generative model 生成模型
 * Clustering 聚类
-* Bootstrap Method 自助抽样法
+* Bootstrap method 自助抽样法
 * Ensemble learning 集成学习
 * Least Squares Estimation 最小二乘估计
 * Maximum Likelihood Estimation 最大拟然估计
@@ -65,12 +65,12 @@ categories: NA
 * Negative Log Likelihood 负对数拟然
 * KL divergence 相对熵/KL散度
 * Sampling 抽样
-* Importance Sampling 重要性抽样
-* Gibbs Sampling 吉布斯抽样
-* Random Walk 随机游走
+* Importance sampling 重要性抽样
+* Gibbs sampling 吉布斯抽样
+* Random walk 随机游走
 * Monte Carlo Method 蒙特卡罗方法
 * Markov Chain Monte Carlo 马尔科夫蒙特卡罗
-* Detailed Balance Condition 细致平衡条件
+* Detailed balance condition 细致平衡条件
 * Variational inference 变分推断
 * Probabilistic Graphical Model 概率图模型
 * Naive Bayes 朴素贝叶斯
@@ -85,7 +85,7 @@ categories: NA
 * Convergence 收敛
 * Convex optimization 凸优化
 * Non-convex optimization 非凸优化
-* Activation Function 激活函数
+* Activation function 激活函数
 * Neuron 神经元
 * Weight 权重
 * hidden layer 隐藏层
