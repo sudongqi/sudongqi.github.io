@@ -2,7 +2,7 @@
 layout: post
 title:  "Least square estimation for Linear Regression"
 date:   2018-05-23 17:05:00 -0700
-categories: ML
+categories: MA
 ---
 
 #### __Abstract__
