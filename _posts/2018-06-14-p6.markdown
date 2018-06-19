@@ -75,7 +75,7 @@ $$
 \end{align} 
 $$
 
-Begin with the definition of mean squared error, we rewrite it in the form of expect value
+Begin with the definition of mean squared error, we rewrite it in the form of expected value
 
 $$
     \frac{1}{N}\sum_i^N (y_i - \hat{f}_i)^2 = \mathrm{E} \big[ (y_x - \hat{f}_x)^2 \big] \tag{Mean Squared Error}
