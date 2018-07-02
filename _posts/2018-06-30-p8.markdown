@@ -103,8 +103,9 @@ our objective is to find a $$P$$ such that any two random variables of the new f
 In addition, because $$D$$ has a smaller dimension than $$C$$, 
 we also want this new feature variables vector to retain as much information as possible from the original dataset.
 This process of finding $$P$$ is called diagonalization in linear algebra (see [Diagonalizable matrix]), 
-and it involves eigendecomposition of matrix $$C$$, which happens to be a real symmetric matrix. 
-We will cover eigendecomposition in another post.
+and it involves the eigendecomposition of matrix $$C$$, which happens to be a real symmetric matrix. 
+We will cover this process in another post.
+
 
 
 
