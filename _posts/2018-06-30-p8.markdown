@@ -32,7 +32,7 @@ $$P \in R^{n \times r}$$ is the reduction matrix,
 and $$Y \in R^{m \times r}$$ is the transformed dataset with $$r$$ variables.
 To better understand how information was stored in our dataset matrix $$X$$, 
 we can use the concept of variance and covariance of feature variables in dataset matrix $$X$$. 
-Let's denote $$v_a$$ as a variable in the variable vector $$v$$: 
+Let's denote $$v_a$$ as a variable in the variable vector $$v\in R^n$$. The variance of $$v_a$$ is:
 
 $$
     \mathrm{Var}(v_a) = \frac{1}{m} \sum_{i=1}^{m} (v_a^i - E[v_a])^2 \tag{1}
@@ -46,9 +46,8 @@ $$
     \mathrm{Cov}(v_a, v_b) = \frac{1}{m} \sum_{i=1}^{m} (v_a^i - E[v_a])(v_b^i - E[v_b]) \tag{2}
 $$
 
-To represent the above information in a matrix form, 
-we can use the concept of covariance matrix of our random variables vector $$v \in R^n$$.
-let us denote this covariance matrix as C:
+To represent both variance and covariance in a matrix form, we can use the concept of covariance matrix.
+let us denote the covariance matrix of the random variables vector $$v$$ as $$C$$:
 
 $$
 \begin{align}
@@ -62,9 +61,9 @@ $$
 \end{align}
 $$
 
-Where the diagonal of C are variance of each variable, 
+Where the diagonal of $$C$$ are variance of each variable, 
 and the non-diagonal elements are covariances of any two variables.
-Noted that if we normalized X by making all $$E[v_i] = 0$$, our transformed X still contains the same information; 
+Noted that if we normalized $$X$$ by making all $$E[v_i] = 0$$, our transformed $$X$$ still contains the same information; 
 therefore, our covariance matrix can be simplified as follow:
 
 $$
@@ -98,7 +97,7 @@ $$
 \end{align}
 $$
 
-Since $$D$$ is a covariance matrix and covariance matrix describes the efficiency of the features variable vector; 
+Since $$D$$ is a covariance matrix and covariance matrix describes the efficiency of the feature variables vector; 
 our objective is to find a $$P$$ such that any two random variables of the new feature variables vector have zero covariance.
 In addition, because $$D$$ has a smaller dimension than $$C$$, 
 we also want this new feature variables vector to retain as much information as possible from the original dataset.
