@@ -47,7 +47,7 @@ $$
 $$
 
 To represent both variance and covariance in a matrix form, we can use the concept of covariance matrix.
-let us denote the covariance matrix of the random variables vector $$v$$ as $$C$$:
+Let's denote the covariance matrix of the random variables vector $$v$$ as $$C$$:
 
 $$
 \begin{align}
