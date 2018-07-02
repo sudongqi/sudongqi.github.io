@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Expectation Maximization from Jensen's inequality"
+title:  "Expectation maximization from Jensen's inequality"
 date:   2018-06-03 23:00:00 -0700
 categories: ML
 ---
@@ -15,7 +15,7 @@ In this post we introduce a common view on Expectation Maximization using Jensen
 [Andrew's note]
 
 
-#### __EM and maximum likelihood estimation__
+### __EM and maximum likelihood estimation__
 The goal of EM is to maximize the likelihood of observed variable X explained by hidden variable Z under a model with 
 parameters $$\theta$$. Noted that when Z is known (usually as labels), this problem becomes a supervised learning problem and 
 it can be solved directly using maximum likelihood estimaation instead of EM. For a training dataset with size $$n$$, the expected log likelihood of
@@ -39,7 +39,7 @@ $$
 $$
 
 
-#### __Derivation from Jensen's inequality__
+### __Derivation from Jensen's inequality__
 Starting from (1), derivation using Jensen's inequality adds a "helper" distribution $$q$$ such that
 
 $$
@@ -80,7 +80,7 @@ $$
     q(z_i) = \frac{p_{\theta}(x_i , z_i)}{p_{\theta}(x_i)} = p_{\theta}(z_i | x_i) \tag{7}
 $$
 
-#### __Expectation Maximization__
+### __Expectation Maximization__
 (7) is our E step
 
 $$

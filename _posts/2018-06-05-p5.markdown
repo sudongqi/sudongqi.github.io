@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Expectation Maximization from KL divergence"
+title:  "Expectation maximization from KL divergence"
 date:   2018-06-05 23:00:00 -0700
 categories: ML
 ---
@@ -16,7 +16,7 @@ is shorter and more intuitive.
 
 [Jianlin's post] (written in Chinese)
 
-#### __KL divergence and maximum likelihood estimation__
+### __KL divergence and maximum likelihood estimation__
 From our [previous post] about EM, 
 we know that EM's objective is to maximizing the expected log likelihood of the training dataset. 
 In here, we want to expand the concept to show that 
@@ -47,7 +47,7 @@ $$
 
 where (0) is the objective of the general EM algorithm.
 
-#### __KL divergence of joint probability__
+### __KL divergence of joint probability__
 Incorporating the hidden variable Z that are used to explain X, we can rewrite our objective using the joint probability of X and Z
 
 $$
@@ -62,7 +62,7 @@ $$
 \end{align}
 $$
 
-#### __Expectation maximization from KL divergence__
+### __Expectation maximization from KL divergence__
 
 To minimize (1), there are two terms we can adjust: $$p_{true}(z | x)$$ and $$p_{\theta}(z|x)p_{\theta}(x)$$. 
 Similar to EM, we can optimize one part assuming the other part is constant and we can do this interchangeably.

@@ -1,0 +1,111 @@
+---
+layout: post
+title:  "Principle component analysis"
+date:   2018-06-30 19:00:00 -0700
+categories: MA
+---
+
+#### __Abstract__
+In this post, 
+we introduce the math foundation behind principal component analysis, 
+a simple technique for dimensionality reduction.
+
+#### __Reference__
+[yang's post]: http://blog.codinglabs.org/articles/pca-tutorial.html
+[Diagonalizable matrix]: https://en.wikipedia.org/wiki/Diagonalizable_matrix#Diagonalization
+
+[yang's post] (written in Chinese)
+
+[Diagonalizable matrix]
+
+### __The efficiency of features__
+The high-level idea of principal component analysis is to reduce the dimensionality of a given dataset 
+by transforming it into a new dataset in which all variables (features) are independent of each other. 
+We denote this transformation as follow:
+
+$$
+    Y = PX \tag{0}
+$$
+
+where $$X \in R^{m \times n}$$ is the original dataset with $$m$$ instances and $$n$$ variables, 
+$$P \in R^{n \times r}$$ is the reduction matrix, 
+and $$Y \in R^{m \times r}$$ is the transformed dataset with $$r$$ variables.
+To better understand how information was stored in our dataset matrix $$X$$, 
+we can use the concept of variance and covariance of feature variables in dataset matrix $$X$$. 
+Let's denote $$v_a$$ as a variable in the variable vector $$v$$: 
+
+$$
+    \mathrm{Var}(v_a) = \frac{1}{m} \sum_{i=1}^{m} (v_a^i - E[v_a])^2 \tag{1}
+$$
+
+The magnitude of the variance can be used to indicate the volume of information embedded in this variable. 
+A variable contains no information is a constant with zero variance.
+Covariance, as another measure, indicate the level of dependency between two variables:
+
+$$
+    \mathrm{Cov}(v_a, v_b) = \frac{1}{m} \sum_{i=1}^{m} (v_a^i - E[v_a])(v_b^i - E[v_b]) \tag{2}
+$$
+
+To represent the above information in a matrix form, 
+we can use the concept of covariance matrix of our random variables vector $$v \in R^n$$.
+let us denote this covariance matrix as C:
+
+$$
+\begin{align}
+    C &= 
+    \begin{bmatrix}
+		\mathrm{Var}(v_1) & \mathrm{Cov}(v_1, v_2) & \dots  & \mathrm{Cov}(v_1, v_n) \\
+		\mathrm{Cov}(v_2, v_1) & \mathrm{Var}(v_2) & \dots  & \mathrm{Cov}(v_2, v_n) \\
+		\vdots & \vdots & \ddots & \vdots \\
+		\mathrm{Cov}(v_n, v_1) & \mathrm{Cov}(v_n, v_2) & \dots  & \mathrm{Var}(v_n)    
+    \end{bmatrix} \tag{3} \\
+\end{align}
+$$
+
+Where the diagonal of C are variance of each variable, 
+and the non-diagonal elements are covariances of any two variables.
+Noted that if we normalized X by making all $$E[v_i] = 0$$, our transformed X still contains the same information; 
+therefore, our covariance matrix can be simplified as follow:
+
+$$
+\begin{align}
+    C &= 
+    \begin{bmatrix}
+		\frac{1}{m} \sum_{i=1}^{m} (v_1)^2 & \frac{1}{m} \sum_{i=1}^{m} v_1 v_2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_1 v_n \\
+		\frac{1}{m} \sum_{i=1}^{m} v_2 v_1 & \frac{1}{m} \sum_{i=1}^{m} (v_2)^2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_2 v_n \\
+		\vdots & \vdots & \ddots & \vdots \\
+		\frac{1}{m} \sum_{i=1}^{m} v_n v_1 & \frac{1}{m} \sum_{i=1}^{m} v_n v_2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} (v_n)^2    
+    \end{bmatrix} \tag{3} \\
+    &= \frac{1}{m} X^T X \tag{4}
+\end{align}
+$$
+
+
+### __The objective of principal component analysis__
+
+From (3), we know that $$C$$ is the covariance matrix associated with the original dataset $$X$$. 
+For the transformed dataset $$Y = XP$$, 
+we can also obtain a covariance matrix $$D \in R^{r \times r}$$ using the same procedural as (4). 
+Interestingly, $$D$$ has can be rewritten with only $$P$$ and $$C$$:
+
+$$
+\begin{align}
+    D &= \frac{1}{m} Y^T Y \\
+      &= \frac{1}{m} (XP)^T (XP) \\
+      &= \frac{1}{m} P^T X^T(XP) \\
+      &= P^T \frac{1}{m} X^T X P \\
+      &= P^T C P \tag{5} 
+\end{align}
+$$
+
+Since $$D$$ is a covariance matrix and covariance matrix describes the efficiency of the features variable vector; 
+our objective is to find a $$P$$ such that any two random variables of the new feature variables vector have zero covariance.
+In addition, because $$D$$ has a smaller dimension than $$C$$, 
+we also want this new feature variables vector to retain as much information as possible from the original dataset.
+This process of finding $$P$$ is called diagonalization in linear algebra (see [Diagonalizable matrix]), 
+and it involves eigendecomposition of matrix $$C$$, which happens to be a real symmetric matrix. 
+We will cover eigendecomposition in another post.
+
+
+
+
