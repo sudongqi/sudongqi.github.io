@@ -102,7 +102,7 @@ our objective is to find a $$P$$ such that any two random variables of this new 
 In addition, because $$D$$ has a smaller dimension than $$C$$, 
 we also want this new feature variables vector to retain as much information as possible from the original dataset. 
 Given $$r$$ real values such that $$\lambda_1 \geq \lambda_2 \dots \lambda_r$$,
-we want D to be diagonal covariance matrix:
+we want D to be a diagonal covariance matrix:
 
 $$
 \begin{align}
