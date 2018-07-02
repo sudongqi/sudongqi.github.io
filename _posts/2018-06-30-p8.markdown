@@ -97,12 +97,28 @@ $$
 \end{align}
 $$
 
-Since $$D$$ is a covariance matrix and covariance matrix describes the efficiency of the feature variables vector; 
-our objective is to find a $$P$$ such that any two random variables of the new feature variables vector have zero covariance.
+Since $$D$$ is a covariance matrix that contains variances and covariances of the new feature variables vector, 
+our objective is to find a $$P$$ such that any two random variables of this new feature variables vector have zero covariance.
 In addition, because $$D$$ has a smaller dimension than $$C$$, 
-we also want this new feature variables vector to retain as much information as possible from the original dataset.
-This process of finding $$P$$ is called diagonalization in linear algebra (see [Diagonalizable matrix]), 
-and it involves the eigendecomposition of matrix $$C$$, which happens to be a real symmetric matrix. 
+we also want this new feature variables vector to retain as much information as possible from the original dataset. 
+Given $$r$$ real values such that $$\lambda_1 \geq \lambda_2 \dots \lambda_r$$,
+we want D to be diagonal covariance matrix:
+
+$$
+\begin{align}
+    D &= 
+    \begin{bmatrix}
+		\lambda_1 & 0 & \dots  & 0 \\
+		0 & \lambda_2 & \dots  & 0 \\
+		\vdots & \vdots & \ddots & \vdots \\
+		0 & 0 & \dots  & \lambda_r    
+    \end{bmatrix} \tag{6} \\
+\end{align}
+$$
+
+
+This process of finding $$P$$ that turns D into a diagonal matrix is called diagonalization in linear algebra (see [Diagonalizable matrix]).
+It involves eigendecomposition of matrix $$C$$, which happens to be a real symmetric matrix in this case. 
 We will cover this process in another post.
 
 
