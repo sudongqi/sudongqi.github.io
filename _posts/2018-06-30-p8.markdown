@@ -71,7 +71,7 @@ $$
     C &= 
     \begin{bmatrix}
 		\frac{1}{m} \sum_{i=1}^{m} (v_1)^2 & \frac{1}{m} \sum_{i=1}^{m} v_1 v_2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_1 v_n \\
-		\frac{1}{m} \sum_{i=1}^{m} v_2 v_1 & \frac{1}{m} chec\sum_{i=1}^{m} (v_2)^2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_2 v_n \\
+		\frac{1}{m} \sum_{i=1}^{m} v_2 v_1 & \frac{1}{m} \sum_{i=1}^{m} (v_2)^2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_2 v_n \\
 		\vdots & \vdots & \ddots & \vdots \\
 		\frac{1}{m} \sum_{i=1}^{m} v_n v_1 & \frac{1}{m} \sum_{i=1}^{m} v_n v_2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} (v_n)^2    
     \end{bmatrix} \tag{3} \\
