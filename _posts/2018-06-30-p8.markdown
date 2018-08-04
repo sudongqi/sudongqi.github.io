@@ -152,7 +152,7 @@ $$
 \end{align}
 $$
 
-Given (7) and (9), it's not hard to see that $$P = V$$ and $$m D = \Sigma^2$$, where $$m$$ is a constant. 
-This means we can solve PCA by only applying SVD on $$X$$, without calculating $$X^T X$$
+Given (7) and (9), it's not difficult to see that $$P = V$$ and $$m D = \Sigma^2$$, where $$m$$ is a constant. 
+This means we can solve PCA by only applying SVD on $$X$$, without calculating $$X^T X$$.
 
 
