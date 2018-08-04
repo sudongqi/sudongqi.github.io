@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Principle component analysis"
+title:  "Principle Component Analysis"
 date:   2018-06-30 19:00:00 -0700
 categories: MA
 ---
@@ -71,7 +71,7 @@ $$
     C &= 
     \begin{bmatrix}
 		\frac{1}{m} \sum_{i=1}^{m} (v_1)^2 & \frac{1}{m} \sum_{i=1}^{m} v_1 v_2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_1 v_n \\
-		\frac{1}{m} \sum_{i=1}^{m} v_2 v_1 & \frac{1}{m} \sum_{i=1}^{m} (v_2)^2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_2 v_n \\
+		\frac{1}{m} \sum_{i=1}^{m} v_2 v_1 & \frac{1}{m} chec\sum_{i=1}^{m} (v_2)^2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} v_2 v_n \\
 		\vdots & \vdots & \ddots & \vdots \\
 		\frac{1}{m} \sum_{i=1}^{m} v_n v_1 & \frac{1}{m} \sum_{i=1}^{m} v_n v_2 & \dots  & \frac{1}{m} \sum_{i=1}^{m} (v_n)^2    
     \end{bmatrix} \tag{3} \\
@@ -119,9 +119,40 @@ $$
 
 This process of finding $$P$$ that turns D into a diagonal matrix is called diagonalization in linear algebra (see [Diagonalizable matrix]).
 It involves eigendecomposition of matrix $$C$$, which happens to be a real symmetric matrix in this case. 
-We will cover this process in another post.
+So if we apply eigendecomposition on $$C$$, we get:
+
+$$
+\begin{align}
+    C = P D P^T \tag{7}
+\end{align}
+$$
+
+where $$P$$ is an orthogonal matrix.
 
 
+### __Relationship with SVD__
 
+It's also common to solve PCA problem with singular value decomposition. First, let us apply SVD on $$X$$:
+
+$$
+\begin{align}
+    X = U \Sigma V^T
+\end{align}
+$$
+
+For $$X^T X$$, we have:
+
+$$
+\begin{align}
+    X^T X &= (U \Sigma V^T)^T U \Sigma V^T \\
+          &= V \Sigma^T U^T U \Sigma V^T \\
+          &= V \Sigma^T \Sigma V^T \tag{$U^T U = I$} \\
+          &= V \Sigma \Sigma V^T \tag{$\Sigma^T = \Sigma$, because $\Sigma$ is a symmetric matrix} \\
+          &= V \Sigma^2 V^T  \tag{8}
+\end{align}
+$$
+
+Given (7) and (8), it's not hard to see that $$m P = V$$ and $$m D = \Sigma^2$$, where $$m$$ is a constant. 
+This means we can solve PCA by only applying SVD on $$X$$, without calculating $$X^T X$$
 
 
