@@ -1,0 +1,124 @@
+---
+layout: post
+title:  "Bessel's correction"
+date:   2018-08-06 19:00:00 -0700
+categories: MA
+---
+
+#### __Abstract__
+In this post, we will quickly go through the math behind Bessel's correction. 
+
+#### __Reference__
+[wikipedia]: https://en.wikipedia.org/wiki/Bessel%27s_correction
+[jbstatistics]: https://www.youtube.com/watch?v=D1hgiAla3KI
+
+[wikipedia]
+
+[jbstatistics]
+
+### __Bessel's correction__
+First, let's assume we have n independent observations from a population with mean $$\mu$$ and variance $$\sigma$$. 
+The definition of population variance $$\sigma^2$$ is: 
+
+$$
+    \sigma^2 = \frac{\sum_{i=1}^n(x_i - \bar{x})^2}{n} \tag{1}
+$$
+
+Given the observation, we can estimate $$\sigma^2$$ with the sample variance $$\sigma_2^2$$ from textbook:
+
+$$
+    \sigma_s^2 = \frac{\sum_{i=1}^n(x_i - \bar{x})^2}{n-1} \tag{2}
+$$
+
+Bessel's correction is the usage of $$n-1$$ instead of $$n$$ in the denominator for the sample variance. 
+It's unintuitive to think that $$\sigma_s^2$$ is actually an unbiased estimation of $$\sigma^2$$:
+
+$$
+    \mathrm{E}(\sigma_s^2) = \mathrm{E} \big[ \frac{\sum_{i=1}^n(x_i - \bar{x})^2}{n-1} \big] \stackrel{?}{=} \sigma^2 \tag{3}
+$$
+
+### __Some useful identities__
+To prove (3), we need to prove a few more useful definitions, namely $$\mathrm{E}(x_i)$$, $$\mathrm{Var}(x_i)$$, 
+$$\mathrm{E}(x_i^2)$$, $$\mathrm{E}(\bar{x})$$, $$\mathrm{Var}(\bar{x})$$ and $$\mathrm{E}(\bar{x}^2)$$. 
+By the population definition, we have:
+
+$$
+    \mathrm{E}(x_i) = \mu \tag{4}
+$$ 
+
+$$
+    \mathrm{Var}(x_i) = \sigma \tag{5} 
+$$ 
+
+$$
+\begin{align}
+    \mathrm{E}(x_i^2) &= \mathrm{Var}(x_i) + \mathrm{E}(x_i)^2 \tag{$\mathrm{Var}(X) = \mathrm{E}(X^2) - \mathrm{E}(X)^2$}\\
+                      &= \sigma + \mu^2 \tag{6}
+\end{align}                
+$$ 
+
+For the sample mean $$\bar{x}$$, we have expected value:
+
+$$
+\begin{align}
+    \mathrm{E}(\bar{x}) &= \mathrm{E}(\frac{x_1 + x_2 + ... x_n}{n}) \\
+                        &= \frac{\mathrm{E}(x_1 + x_2 + ... x_n)}{n} \\
+                        &= \frac{\mathrm{E}(x_1) + \mathrm{E}(x_2) + ... \mathrm{E}(x_n)}{n} \\
+                        &= \frac{n \mu}{n} \\
+                        &= \mu \tag{7}
+\end{align}
+$$ 
+
+Similarly, for variance of sample mean:
+
+$$
+\begin{align}
+    \mathrm{Var}(\bar{x}) &= \mathrm{Var}(\frac{x_1 + x_2 + ... x_n}{n}) \\
+                          &= \frac{\mathrm{Var}(x_1 + x_2 + ... x_n)}{n^2} \tag{$\mathrm{Var}(cX)=c^2\mathrm{Var}(X)$} \\
+                          &= \frac{\mathrm{Var}(x_1) + \mathrm{Var}(x_2) + ... \mathrm{Var}(x_n)}{n^2} \\
+                          &= \frac{n \sigma}{n^2} \\
+                          &= \frac{\sigma}{n} \tag{8}
+\end{align}
+$$
+
+Given (7) and (8), we have:
+
+$$
+\begin{align}
+    \mathrm{E}(\bar{x}^2) &= \mathrm{Var}(\bar{x}) + \mathrm{E}(\bar{x})^2 \tag{$\mathrm{Var}(X) = \mathrm{E}(X^2) - \mathrm{E}(X)^2$}\\
+                          &= \frac{\sigma}{n} + \mu^2 \tag{9}
+\end{align}
+$$
+
+### __Proof__
+
+Given the above identities, proving (3) is straight forward. Let's ignore the denominator $$n-1$$ for now: 
+
+$$
+\begin{align}
+    & \mathrm{E} \big[ \sum_{i=1}^n (x_i - \bar{x})^2 \big] \\
+    &= \mathrm{E} \big[ \sum_{i=1}^n (x_i^2 - 2 x_i \bar{x} + \bar{x}^2) \big] \\
+    &= \mathrm{E} \big[ \sum_{i=1}^n x_i^2 - \sum_{i=1}^n 2 x_i \bar{x} + \sum_{i=1}^n \bar{x}^2 \big] \\
+    &= \mathrm{E} \big[ \sum_{i=1}^n x_i^2 - 2 \bar{x} \sum_{i=1}^n x_i + n \bar{x}^2 \big] \tag{$\bar{x}$ is constant} \\
+    &= \mathrm{E} \big[ \sum_{i=1}^n x_i^2 - 2 \bar{x} (n \bar{x}) + n \bar{x}^2 \big] \tag{$\sum_{i=1}^n x_i = n \bar{x}$} \\
+    &= \mathrm{E} \big[ \sum_{i=1}^n x_i^2 - 2 n \bar{x}^2 + n \bar{x}^2 \big] \\
+    &= \mathrm{E} \big[ \sum_{i=1}^n x_i^2 - n \bar{x}^2 \big] \\
+    &= \sum_{i=1}^n \mathrm{E}(x_i^2) - \mathrm{E}(n \bar{x}^2) \\
+    &= \sum_{i=1}^n \mathrm{E}(x_i^2) - n \mathrm{E}(\bar{x}^2) \\
+    &= \sum_{i=1}^n \sigma + \mu^2 - \frac{\sigma}{n} + \mu^2 \tag{given (6), (9)} \\
+    &= \sum_{i=1}^n \sigma - \frac{\sigma}{n} \\
+    &= n \sigma - \sigma \tag{$\sigma$ is constant} \\
+    &= (n - 1) \sigma  \tag{10} \\
+\end{align}
+$$
+
+Given (10), it's not hard to see that:
+
+$$
+    \frac{\mathrm{E} \big[ \sum_{i=1}^n (x_i - \bar{x})^2 \big]}{n-1} = \mathrm{E} \big[ \frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n-1} \big] = \mathrm{E} (\sigma_s^2) = \sigma^2 \tag{11}
+$$
+
+
+
+
+
