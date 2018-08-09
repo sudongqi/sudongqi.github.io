@@ -17,7 +17,7 @@ In this post, we will quickly go through the math behind Bessel's correction.
 [jbstatistics]
 
 ### __Bessel's correction__
-First, let's assume we have n independent observations from a population with mean $$\mu$$ and variance $$\sigma$$. 
+First, let's assume we have n independent observations from a population with mean $$\mu$$ and variance $$\sigma^2$$. 
 The definition of population variance $$\sigma^2$$ is: 
 
 $$
@@ -47,13 +47,13 @@ $$
 $$ 
 
 $$
-    \mathrm{Var}(x_i) = \sigma \tag{5} 
+    \mathrm{Var}(x_i) = \sigma^2 \tag{5} 
 $$ 
 
 $$
 \begin{align}
     \mathrm{E}(x_i^2) &= \mathrm{Var}(x_i) + \mathrm{E}(x_i)^2 \tag{$\mathrm{Var}(X) = \mathrm{E}(X^2) - \mathrm{E}(X)^2$}\\
-                      &= \sigma + \mu^2 \tag{6}
+                      &= \sigma^2 + \mu^2 \tag{6}
 \end{align}                
 $$ 
 
@@ -76,8 +76,8 @@ $$
     \mathrm{Var}(\bar{x}) &= \mathrm{Var}(\frac{x_1 + x_2 + ... x_n}{n}) \\
                           &= \frac{\mathrm{Var}(x_1 + x_2 + ... x_n)}{n^2} \tag{$\mathrm{Var}(cX)=c^2\mathrm{Var}(X)$} \\
                           &= \frac{\mathrm{Var}(x_1) + \mathrm{Var}(x_2) + ... \mathrm{Var}(x_n)}{n^2} \\
-                          &= \frac{n \sigma}{n^2} \\
-                          &= \frac{\sigma}{n} \tag{8}
+                          &= \frac{n \sigma^2}{n^2} \\
+                          &= \frac{\sigma^2}{n} \tag{8}
 \end{align}
 $$
 
@@ -86,7 +86,7 @@ Given (7) and (8), we have:
 $$
 \begin{align}
     \mathrm{E}(\bar{x}^2) &= \mathrm{Var}(\bar{x}) + \mathrm{E}(\bar{x})^2 \tag{$\mathrm{Var}(X) = \mathrm{E}(X^2) - \mathrm{E}(X)^2$}\\
-                          &= \frac{\sigma}{n} + \mu^2 \tag{9}
+                          &= \frac{\sigma^2}{n} + \mu^2 \tag{9}
 \end{align}
 $$
 
@@ -105,10 +105,10 @@ $$
     &= \mathrm{E} \big[ \sum_{i=1}^n x_i^2 - n \bar{x}^2 \big] \\
     &= \sum_{i=1}^n \mathrm{E}(x_i^2) - \mathrm{E}(n \bar{x}^2) \\
     &= \sum_{i=1}^n \mathrm{E}(x_i^2) - n \mathrm{E}(\bar{x}^2) \\
-    &= \sum_{i=1}^n \sigma + \mu^2 - \frac{\sigma}{n} + \mu^2 \tag{given (6), (9)} \\
-    &= \sum_{i=1}^n \sigma - \frac{\sigma}{n} \\
-    &= n \sigma - \sigma \tag{$\sigma$ is constant} \\
-    &= (n - 1) \sigma  \tag{10} \\
+    &= \sum_{i=1}^n \sigma^2 + \mu^2 - \frac{\sigma^2}{n} + \mu^2 \tag{given (6), (9)} \\
+    &= \sum_{i=1}^n \sigma^2 - \frac{\sigma^2}{n} \\
+    &= n \sigma^2 - \sigma^2 \tag{$\sigma^2$ is constant} \\
+    &= (n - 1) \sigma^2  \tag{10} \\
 \end{align}
 $$
 
