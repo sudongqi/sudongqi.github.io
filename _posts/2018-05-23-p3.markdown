@@ -7,7 +7,8 @@ categories: MA
 
 #### __Abstract__
 
-This post shows how to derive the closed form solution of least square estimation for linear regression
+This post shows how to derive the closed form solution of least square estimation for linear regression. 
+After that, we will show how to derive the variance of such closed form solution.
 
 #### __Scalar by Vector Differentiation__
 
@@ -36,19 +37,59 @@ $$
 
 $$
 \begin{align}
-	J(\theta) &= ((X\theta)^T - y^T)(X\theta - y) \nonumber \\
-	J(\theta) &= (X\theta)^T X\theta - (X\theta)^T y - y^T X\theta + y^T y \nonumber \\
+	J(\theta) &= ((X\theta)^T - y^T)(X\theta - y) \\
+	J(\theta) &= (X\theta)^T X\theta - (X\theta)^T y - y^T X\theta + y^T y \\
 	J(\theta) &= \theta^T X^T X\theta - 2 (X\theta)^T y + y^T y \tag{$(X\theta)^T y = y^T X\theta$} \\
-	\frac{d J(\theta)}{d \theta} &= 2 X^T X \theta - 2 X^T y \tag{matrix calculus, $X^T X$ is symmetric} \\
+\end{align}
+$$
+
+$$
+\begin{align}
+    \frac{d J(\theta)}{d \theta} &= 2 X^T X \theta - 2 X^T y \tag{matrix calculus, $X^T X$ is symmetric} \\
 	0 &= 2 X^T X \theta - 2 X^T y \tag{when $\frac{d J(\theta)}{d \theta} = 0$, $J(\theta)$ was minimized} \\
-	X^T X \theta &= X^T y \nonumber \\
+	X^T X \theta &= X^T y  \\
 	\theta &= (X^T X)^{-1} X^T y \tag{Least square estimation of $\theta$}
 \end{align}
 $$
 
+#### __Variance of $$\theta$$__
+To derive variance of $$\theta$$, we need a few useful identities:
+
+$$
+\begin{align}
+    \mathrm{Var}(CX) &= \mathrm{E}\big[ (C (X-\bar{X}))(C (X-\bar{X}))^T \big] \tag{$C$ is a constant matrix} \\
+    &= \mathrm{E}\big[ C (X-\bar{X}) (X-\bar{X})^T C^T \big] \\
+    &= C \mathrm{E}\big[ (X-\bar{X}) (X-\bar{X})^T \big] C^T \\
+    &= C \mathrm{Var}(X) C^T
+\end{align}
+$$
+
+$$
+\begin{align}
+    (X^{-1})^T &= (X^T) ^ {-1} \tag{transpose of inverse is equal to inverse of transpose}
+\end{align}
+$$
+
+With the assumption that all labels are independent with variance $$\sigma^2$$, we have:
+
+$$
+\begin{align}
+    \mathrm{Var}(y) &= \sigma^2  I \tag{$I$ is an identity matrix}
+\end{align}
+$$
 
 
+With above identities, we can calculate the variance of $$\theta$$
 
+$$
+\begin{align}
+    \mathrm{Var}(\theta) &= \mathrm{Var}((X^T X)^{-1} X^T y) \\
+    &= (X^T X)^{-1} X^T \sigma^2  I ((X^T X)^{-1} X^T)^T \tag{$(X^T X)^{-1} X^T$ is constant} \\
+    &= \sigma^2 (X^T X)^{-1} X^T I X ((X^T X)^T)^{-1} \tag{$\sigma^2$ is constant} \\
+    &= \sigma^2 (X^T X)^{-1} X^T X (X^T X)^{-1} \tag{cancel out identity matrix} \\
+    &= \sigma^2 (X^T X)^{-1} \tag{$A^{-1}A = I$} \\
+\end{align}
+$$
 
 
 
