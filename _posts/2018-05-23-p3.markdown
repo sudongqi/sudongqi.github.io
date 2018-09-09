@@ -8,7 +8,7 @@ categories: MA
 #### __Abstract__
 
 This post shows how to derive the closed form solution of least square estimation for linear regression. 
-After that, we will show how to derive the variance of such closed form solution.
+After that, we will show how to derive the variance of the coefficient from the closed form solution.
 
 #### __Scalar by Vector Differentiation__
 
