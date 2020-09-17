@@ -3,8 +3,7 @@ layout: page
 title: About
 permalink: /about/
 ---
-Author: Dongqi Su
-[homepage](http://sudongqi.com/#/)
+Author: [Dongqi Su](http://sudongqi.com/#/)
 
 #### __Talk is cheap. Show me the math!__
 This blog collects, refines and presents math concepts behind machine learning in a minimalistic way.
