@@ -2,7 +2,7 @@
 layout: post
 title:  "Bessel's correction"
 date:   2018-08-06 19:00:00 -0700
-categories: MA
+categories: Math
 ---
 
 #### __Abstract__

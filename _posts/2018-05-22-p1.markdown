@@ -2,7 +2,7 @@
 layout: post
 title:  "Jekyll MathJax guide"
 date:   2018-05-22 00:26:43 -0700
-categories: NA
+categories: N/A
 ---
 
 #### __Highlight code snippets__

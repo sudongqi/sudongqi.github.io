@@ -2,7 +2,7 @@
 layout: post
 title:  "机器学习常见术语中英对照表"
 date:   2018-06-14 11:00:00 -0700
-categories: NA
+categories: N/A
 ---
 ### __机器学习__
 * Loss function 损失函数

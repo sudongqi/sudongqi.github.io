@@ -2,7 +2,7 @@
 layout: post
 title:  "Bias-variance decomposition"
 date:   2018-06-14 10:00:00 -0700
-categories: MA
+categories: Math
 ---
 
 #### __Abstract__
