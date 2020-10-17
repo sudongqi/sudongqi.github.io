@@ -1,0 +1,132 @@
+---
+layout: post
+title:  "程序化生成下的实用双三次抽样"
+date:   2020-07-30 19:00:00 -0700
+categories: PCG
+---
+
+#### __摘要__
+本篇介绍双三次抽样的基本原理，以及它在三维地形生成中的一个应用，还有代码实现。
+
+#### __资料引用__
+[1] <a href="https://en.wikipedia.org/wiki/Bicubic_interpolation" target="_blank">wikipedia: bicubic interpolation</a><br>
+[2] <a href="https://en.wikipedia.org/wiki/Perlin_noise" target="_blank">wikipedia: perlin noise</a><br>
+[3] <a href="https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781119083405.app1" target="_blank">Finite Difference Approximations
+of Derivatives</a>
+
+### __地形生成__
+我最近在研究三维地形生成，这应该算是程序化生成中一个最常见的应用。
+地形生成的本质是生成高度图，一般比较复杂的方案会合成多张噪音图[2]，让每一张噪音图控制不同的细节。
+一个比较麻烦的问题是，生成的噪音图如果解析度不一样，则较小的噪音图需要上采样，或者较大的图需要下采样。
+上采样在数学上常用的方法就是插值法，两种最直观的插值法是最近邻插值和双线性插值。
+双三次抽样没有那么直观，不过它是三种方法里唯一保证连续性的，在视觉上来说，就是你不会看到突兀的变化。
+
+<img src="/assets/p10/bilinear.PNG" title="bilinear">
+<img src="/assets/p10/bicubic.PNG" title="bicubic">
+
+以上面两图为例，当插值数量远远大于控制点数量时候，双线性插值法会产生明显的分割线，双三次插值法可以完全避免这个问题。
+不过，双线性法在插值数量和控制点数量相当时可以掩盖过渡的突兀。
+### __数学原理__
+每一个插值都受网格中周围16个采样点的影响（里边最靠近$$(x, y)$$的4个以及外面一圈的12个），最后的求值公式用到了三次函数在二维上的定义，维基百科已有详细说明，在这里就不再扩展，插值的求值公式如下：
+
+$$
+    p(x,y) = \sum_{i=0}^3 \sum_{i=0}^3 a_{ij} x^i y^j 
+$$
+
+要求出 $$ a_{ij} $$，我们还必须列出如下连续性的限制条件：对于里边的4个点，其插值$$p(x, y)$$和采样值$$f(x, y)$$在x，y以及x混合y三个方向的导数相同。
+有了这些限制后，所有的$$a_{ij}$$ 便可以用16个采样值以及其三个方向上的导数表示出来。
+
+<img src="/assets/p10/coefficients.PNG" title="coefficients">
+
+在离散的情况下：
+
+$$
+    f_x(x, y) = \frac{f(x - 1, y) + f(x + 1, y)}{2}
+$$
+
+$$
+    f_y(x, y) = \frac{f(x, y - 1) + f(x, y + 1)}{2}
+$$
+
+$$
+    f_{xy}(x, y) = \frac{f(x + 1, y + 1) - f(x - 1, y + 1) - f(x + 1, y - 1) + f(x - 1, y - 1)}{4} 
+$$
+
+其中$$f_{xy}$$的值不是很直观，不过可以由二阶离散导数的逼近推导得出[3]。最后的插值公式为:
+
+<img src="/assets/p10/interpolations.PNG" title="interpolations" height="100">
+
+
+### __C#实现__
+在工程实现上，应该先把所有采样点的三个导数算出来，存起来，再开始遍历插值位置来减少计算量。
+
+
+{% highlight c# %}
+using Unity.Mathematics;
+using UnityEngine;
+
+public class BicubicSampler {
+    public float[] data;
+    public float4x4[] B;
+    public int width;
+    public int height;
+
+    public BicubicSampler(float[] data, int width) {
+        this.data = data;
+        this.width = width;
+        height = data.Length / width;
+        B = new float4x4[(height - 1) * (width - 1)];
+        SetUp();
+    }
+
+    public float F(int x, int y) {
+        int _x = (x < 0) ? 0 : ((x >= width) ? width - 1 : x);
+        int _y = (y < 0) ? 0 : ((y >= height) ? height - 1 : y);
+        return data[_y * width + _x];
+    }
+
+    public float Fx(int x, int y) {
+        return (F(x + 1, y) - F(x - 1, y)) * 0.5f;
+    }
+
+    public float Fy(int x, int y) {
+        return (F(x, y + 1) - F(x, y - 1)) * 0.5f;
+    }
+
+    public float Fxy(int x, int y) {
+        return (F(x + 1, y + 1) - F(x - 1, y + 1) - F(x + 1, y - 1) + F(x - 1, y - 1)) * 0.25f;
+    }
+
+    public void SetUp() {
+        var left = new float4x4(1, 0, 0, 0, 0, 0, 1, 0, -3, 3, -2, -1, 2, -2, 1, 1);
+        var right = new float4x4(1, 0, -3, 2, 0, 0, 3, -2, 0, 1, -2, 1, 0, 0, -1, 1);
+
+        for (int y = 0; y < height - 1; y++) {
+            for (int x = 0; x < width - 1; x++) {
+                var sample = new float4x4(
+                    F(x - 1, y - 1), F(x - 1, y), Fy(x - 1, y - 1), Fy(x - 1, y),
+                    F(x, y - 1), F(x, y), Fy(x, y - 1), Fy(x, y),
+                    Fx(x - 1, y - 1), Fx(x - 1, y), Fxy(x - 1, y - 1), Fxy(x - 1, y),
+                    Fx(x, y - 1), Fx(x, y), Fxy(x, y - 1), Fxy(x, y)
+                );
+                B[y * (width - 1) + x] = math.mul(left, math.mul(sample, right));
+            }
+        }
+    }
+
+    public float Interpolate(Vector2 pos) {
+        float _x = pos.x * (width - 1);
+        float _y = pos.y * (height - 1);
+        int idX = (int)_x;
+        int idY = (int)_y;
+        float u = _x - idX;
+        float v = _y - idY;
+        var left = new float4(1, u, u * u, u * u * u);
+        var right = new float4(1, v, v * v, v * v * v);
+        var res = math.mul(left, math.mul(B[idY * (width - 1) + idX], right));
+        return res;
+    }
+}
+{% endhighlight %}
+
+
