@@ -20,7 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79b692eb-caf6-49c1-b456-2fa26f58ae98" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/_posts/2020-07-30-p10.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2020-07-30-p10.markdown" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/P10/bicubic.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/assets/p10/bicubic.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/P10/bilinear.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/assets/p10/bilinear.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/P10/coefficients.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/assets/p10/coefficients.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/P10/interpolations.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/assets/p10/interpolations.PNG" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
