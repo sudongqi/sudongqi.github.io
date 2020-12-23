@@ -13,7 +13,7 @@ categories: CompLing
 计算语言学和生成语法所代表的符号主义(symbolism)已经不再具有可以独立挑战深度学习的可能性，
 但符号主义所拥有的优势恰恰是深度学习所缺失的。
 本篇文章不讨论如何结合两者，
-但会用一个叫中心词驱动短语结构语法(HPSG: Head-Driven Phrase Structure Grammar)的生成语法来简单介绍符号主义视角下的语言理解方案。
+但会用中心词驱动短语结构语法(HPSG: Head-Driven Phrase Structure Grammar)来简单介绍符号主义视角下的语言理解方案。
 
 #### __资料引用__
 [1] <a href="https://web.stanford.edu/group/cslipublications/cslipublications/site/1575864002.shtml" target="_blank">Syntax theory: a formal introduction</a><br>
@@ -23,7 +23,8 @@ categories: CompLing
 生成语法的分支有不少，最早也是最出名的是由乔姆斯基(chomsky)提出的转换生成语法(transformational grammar)。
 而后续的发展使得生成语法出现了分支，一种以减轻规则数量而把语言的惯例(conventions)和限制(constraints)下放到词典(lexicon)的思路逐渐诞生，
 HPSG也是这种词汇化(lexicalized)思路下发展出来的语法。
-虽然对于计算语言学的研究者们来说，这些分支的区别很大，但对计算机科学背景的研究者来讲，这些区别并不重要，所有的生成语法都是可以用程序语言描述的，而恰好HPSG则是这其中有相对完善的软件支持的语法[2]。
+虽然对于计算语言学的研究者们来说，这些分支的区别很大，但对计算机科学背景的研究者来讲，这些区别并不重要，所有的生成语法都是可以用程序语言描述的，
+而HPSG则是这其中有相对完善的软件支持的语法[2]。
 
 #### __Lexicon__
 
@@ -36,9 +37,9 @@ Lexicon包含了HPSG中绝大部分的关于语言惯例和语法限制的信息
 而specifier(SPR)和complements(COMPS)则记录了对这个词产生影响的前后的词(specifier为前，complements为后)。
 在这个例子中，动词hand由于受到英语subject verb agreement的影响，其单复数形式会和自己的主语一致(第三人称主语用hands)，
 所以hand的agreement和自己的specifier的agreement保持一致。
-在HPSG，描述这样的限制是靠两个相同的索引完成的([6])，这样的索引可以放置在任何结构和任何位置。<br><br>
+在HPSG，描述这样的限制是靠两个相同的索引完成的([6])，这样的索引可以放置在任何结构任何位置。<br><br>
 
-而ARG-ST则是用来描述这个词在句子里完整而且必要语境，其作用和语言模型非常类似。
+而ARG-ST则是用来描述这个词在句子里完整而且必要的语境，其作用和语言模型类似。
 例如动词give：[somebody] give [something] [to somebody]，give的ARG-ST可以要求第二个complement必须是一个以to开头的名词短语。
 一般来说，ARG-ST可以被拆分成SYN里的specifier和complements，
 但在long term dependency的情况下，specifier或者complements可以被省略掉，假设省略掉的部分已经在之前出现过。
