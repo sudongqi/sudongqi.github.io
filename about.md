@@ -14,12 +14,12 @@ and don't worry, someday we will have the perfect translator.
 (or you can use the current Google translator; it's very good)
 
 #### __Theme of this blog__
-This blog uses a modified Jekyll Minima theme:
+A modified Jekyll Minima theme:
 [source code](https://github.com/sudongqi/sudongqi.github.io) 
 
-You can find the source code for Minima at GitHub:
+Source code for Minima at GitHub:
 [minima](https://github.com/jekyll/minima)
 
-You can find the source code for Jekyll at GitHub:
+Source code for Jekyll at GitHub:
 [jekyll](https://github.com/jekyll/jekyll)
 
