@@ -13,7 +13,7 @@ categories: CompLing
 计算语言学和生成语法所代表的符号主义(symbolism)已经不再具有可以独立挑战深度学习的可能性，
 但符号主义所拥有的优势恰恰是深度学习所缺失的。
 这篇文章不讨论如何结合两者，
-但会用中心词驱动短语结构语法(HPSG: Head-Driven Phrase Structure Grammar)来简单介绍符号主义视角下的语言理解方案。
+但会用一个叫中心词驱动短语结构语法(HPSG: Head-Driven Phrase Structure Grammar)的生成语法来简单介绍符号主义视角下的语言理解方案。
 
 #### __资料引用__
 [1] <a href="https://web.stanford.edu/group/cslipublications/cslipublications/site/1575864002.shtml" target="_blank">Syntax theory: a formal introduction</a><br>
