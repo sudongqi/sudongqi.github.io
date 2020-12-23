@@ -89,7 +89,7 @@ HPSG的教科书([1])里只用了一页半列就列举完了能覆盖绝大多�
 <img src="../assets/p11/HCR.JPG" title="interpolations" width="300">
 <img src="../assets/p11/HMR.JPG" title="interpolations" width="300">
 <img src="../assets/p11/HFR.JPG" title="interpolations" width="330">
-<img src="../assets/p11/imperativeR.JPG" title="interpolations" width="350">
+<img src="../assets/p11/ImperativeR.JPG" title="interpolations" width="350">
 <img src="../assets/p11/COORD.JPG" title="interpolations" width="350">
 </center>
 
