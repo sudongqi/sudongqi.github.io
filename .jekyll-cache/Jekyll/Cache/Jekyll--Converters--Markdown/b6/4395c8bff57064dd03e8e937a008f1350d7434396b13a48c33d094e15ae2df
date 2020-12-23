@@ -1,0 +1,114 @@
+I"<h3 id="机器学习"><strong>机器学习</strong></h3>
+<ul>
+  <li>Loss function 损失函数</li>
+  <li>Regularization 正则化</li>
+  <li>Overfitting 过拟合</li>
+  <li>Underfitting 欠拟合</li>
+  <li>Generalization 泛化</li>
+  <li>Expectation 期望值/数学期望</li>
+  <li>Variance 方差</li>
+  <li>Bias 偏差</li>
+  <li>Error 误差</li>
+  <li>Residual 残差</li>
+  <li>Regression 回归</li>
+  <li>Classification 分类</li>
+  <li>Feature selection 特征选择</li>
+  <li>Pattern recognition 模式识别</li>
+  <li>Supervised learning 监督学习</li>
+  <li>Unsupervised learning 无监督学习</li>
+  <li>Reinforcement learning 强化学习</li>
+  <li>Discriminative model 判别模型</li>
+  <li>Generative model 生成模型</li>
+  <li>Clustering 聚类</li>
+  <li>Bootstrap method 自助抽样法</li>
+  <li>Ensemble learning 集成学习</li>
+  <li>Least Squares Estimation 最小二乘估计</li>
+  <li>Maximum Likelihood Estimation 最大拟然估计</li>
+  <li>Expectation Maximization 期望最大化</li>
+  <li>Closed-form solution 闭合解/解析解</li>
+</ul>
+
+<h3 id="传统机器学习模型"><strong>传统机器学习模型</strong></h3>
+<ul>
+  <li>Linear Regression 线性回归</li>
+  <li>Logistic Regression 逻辑回归</li>
+  <li>Support Vector Machine 支持向量机</li>
+  <li>Perceptron 感知机</li>
+  <li>Decision Tree 决策树</li>
+  <li>Gradient Boosting 梯度提升</li>
+  <li>Gradient Boosting Decision Tree 梯度提升决策树</li>
+  <li>Random Forest 随机森林</li>
+  <li>Gaussian Mixed Model 混合高斯模型</li>
+  <li>K-means clustering K均值聚类</li>
+</ul>
+
+<h3 id="概率图模型"><strong>概率图模型</strong></h3>
+<ul>
+  <li>Distribution 分布</li>
+  <li>Conditional distribution 条件分布</li>
+  <li>Joint distribution 联合分布</li>
+  <li>Marginal distribution 边缘分布</li>
+  <li>Binomial distribution 二项分布</li>
+  <li>Bernoulli distribution 伯努利分布</li>
+  <li>Categorical distribution 分类分布</li>
+  <li>Multinomial distribution 多项分布</li>
+  <li>Gamma distribution 伽玛分布</li>
+  <li>Beta distribution 贝塔分布</li>
+  <li>Dirichlet distribution 狄利克雷分布</li>
+  <li>Gaussian distribution 高斯分布</li>
+  <li>Bayes’ Rule 贝叶斯法则</li>
+  <li>Prior probability 先验概率</li>
+  <li>Conjugate prior 共轭先验</li>
+  <li>Posterior probability 后验概率</li>
+  <li>Cross Entropy 交叉熵</li>
+  <li>Negative Log Likelihood 负对数拟然</li>
+  <li>KL divergence 相对熵/KL散度</li>
+  <li>Sampling 抽样</li>
+  <li>Importance sampling 重要性抽样</li>
+  <li>Gibbs sampling 吉布斯抽样</li>
+  <li>Random walk 随机游走</li>
+  <li>Monte Carlo Method 蒙特卡罗方法</li>
+  <li>Markov Chain Monte Carlo 马尔科夫蒙特卡罗</li>
+  <li>Detailed balance condition 细致平衡条件</li>
+  <li>Variational inference 变分推断</li>
+  <li>Probabilistic Graphical Model 概率图模型</li>
+  <li>Naive Bayes 朴素贝叶斯</li>
+  <li>Hidden Markov Model 隐马尔科夫模型</li>
+  <li>Conditional Random Field 条件随机场</li>
+</ul>
+
+<h3 id="深度学习"><strong>深度学习</strong></h3>
+<ul>
+  <li>Forward propagation 正向传播</li>
+  <li>Backward propagation 反向传播</li>
+  <li>Gradient 梯度</li>
+  <li>Stochastic Gradient Descent 随机梯度下降</li>
+  <li>Convergence 收敛</li>
+  <li>Convex optimization 凸优化</li>
+  <li>Non-convex optimization 非凸优化</li>
+  <li>Activation function 激活函数</li>
+  <li>Neuron 神经元</li>
+  <li>Weight 权重</li>
+  <li>hidden layer 隐藏层</li>
+  <li>Tensor 张量</li>
+  <li>Hyperparameter 超参数</li>
+  <li>Batches 批次</li>
+  <li>Epochs 周期</li>
+  <li>Pooling 池化</li>
+  <li>Padding 填充/补白</li>
+  <li>Dropout 丢弃法</li>
+  <li>Embedding 嵌套</li>
+  <li>Initialization 初始化</li>
+  <li>Batch normalization 批量归一化</li>
+  <li>Neural Network 神经网络</li>
+  <li>Residual Network 残差网络</li>
+  <li>Recurrent Neural Network 递归神经网络/循环神经网络</li>
+  <li>Long Short-Term memory 长短时记忆</li>
+  <li>Backpropagation through time 沿时反向传播</li>
+  <li>Convolutional Neural Network 卷积神经网络</li>
+  <li>Variational Autoencoder 变分自动编码器</li>
+  <li>Generative Adversarial Network 生成对抗网络</li>
+</ul>
+
+<p>(未完)</p>
+:ET

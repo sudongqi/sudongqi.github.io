@@ -1,0 +1,126 @@
+I"�<h4 id="abstract"><strong>Abstract</strong></h4>
+<p>In this post, 
+we introduce the math foundation behind principal component analysis, 
+a simple technique for dimensionality reduction.</p>
+
+<h4 id="reference"><strong>Reference</strong></h4>
+
+<p><a href="http://blog.codinglabs.org/articles/pca-tutorial.html">yang’s post</a> (written in Chinese)</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Diagonalizable_matrix#Diagonalization">Diagonalizable matrix</a></p>
+
+<h3 id="the-efficiency-of-features"><strong>The efficiency of features</strong></h3>
+<p>The high-level idea of principal component analysis is to reduce the dimensionality of a given dataset 
+by transforming it into a new dataset in which all variables (features) are independent of each other. 
+We denote this transformation as follow:</p>
+
+<p>[Y = PX \tag{0}]</p>
+
+<p>where \(X \in R^{m \times n}\) is the original dataset with \(m\) instances and \(n\) variables, 
+\(P \in R^{n \times r}\) is the reduction matrix, 
+and \(Y \in R^{m \times r}\) is the transformed dataset with \(r\) variables.
+To better understand how information was stored in our dataset matrix \(X\), 
+we can use the concept of variance and covariance of feature variables in dataset matrix \(X\). 
+Let’s denote \(v_a\) as a variable in the variable vector \(v\in R^n\). The variance of \(v_a\) is:</p>
+
+<p>[\mathrm{Var}(v_a) = \frac{1}{m} \sum_{i=1}^{m} (v_a^i - E[v_a])^2 \tag{1}]</p>
+
+<p>The magnitude of the variance can be used to indicate the volume of information embedded in this variable. 
+A variable contains no information is a constant with zero variance.
+Covariance, as another measure, indicate the level of dependency between two variables:</p>
+
+<p>[\mathrm{Cov}(v_a, v_b) = \frac{1}{m} \sum_{i=1}^{m} (v_a^i - E[v_a])(v_b^i - E[v_b]) \tag{2}]</p>
+
+<p>To represent both variance and covariance in a matrix form, we can use the concept of covariance matrix.
+Let’s denote the covariance matrix of the random variables vector \(v\) as \(C\):</p>
+
+<p>[\begin{align}
+    C &amp;= 
+    \begin{bmatrix}
+		\mathrm{Var}(v_1) &amp; \mathrm{Cov}(v_1, v_2) &amp; \dots  &amp; \mathrm{Cov}(v_1, v_n) <br />
+		\mathrm{Cov}(v_2, v_1) &amp; \mathrm{Var}(v_2) &amp; \dots  &amp; \mathrm{Cov}(v_2, v_n) <br />
+		\vdots &amp; \vdots &amp; \ddots &amp; \vdots <br />
+		\mathrm{Cov}(v_n, v_1) &amp; \mathrm{Cov}(v_n, v_2) &amp; \dots  &amp; \mathrm{Var}(v_n)  <br />
+    \end{bmatrix} \tag{3} <br />
+\end{align}]</p>
+
+<p>Where the diagonal of \(C\) are variance of each variable, 
+and the non-diagonal elements are covariances of any two variables.
+Noted that if we normalized \(X\) by making all \(E[v_i] = 0\), our transformed \(X\) still contains the same information; 
+therefore, our covariance matrix can be simplified as follow:</p>
+
+<p>[\begin{align}
+    C &amp;= 
+    \begin{bmatrix}
+		\frac{1}{m} \sum_{i=1}^{m} (v_1)^2 &amp; \frac{1}{m} \sum_{i=1}^{m} v_1 v_2 &amp; \dots  &amp; \frac{1}{m} \sum_{i=1}^{m} v_1 v_n <br />
+		\frac{1}{m} \sum_{i=1}^{m} v_2 v_1 &amp; \frac{1}{m} \sum_{i=1}^{m} (v_2)^2 &amp; \dots  &amp; \frac{1}{m} \sum_{i=1}^{m} v_2 v_n <br />
+		\vdots &amp; \vdots &amp; \ddots &amp; \vdots <br />
+		\frac{1}{m} \sum_{i=1}^{m} v_n v_1 &amp; \frac{1}{m} \sum_{i=1}^{m} v_n v_2 &amp; \dots  &amp; \frac{1}{m} \sum_{i=1}^{m} (v_n)^2  <br />
+    \end{bmatrix} \tag{3} <br />
+    &amp;= \frac{1}{m} X^T X \tag{4}
+\end{align}]</p>
+
+<h3 id="the-objective-of-principal-component-analysis"><strong>The objective of principal component analysis</strong></h3>
+
+<p>From (3), we know that \(C\) is the covariance matrix associated with the original dataset \(X\). 
+For the transformed dataset \(Y = XP\), 
+we can also obtain a covariance matrix \(D \in R^{r \times r}\) using the same procedural as (4). 
+Interestingly, \(D\) has can be rewritten with only \(P\) and \(C\):</p>
+
+<p>[\begin{align}
+    D &amp;= \frac{1}{m} Y^T Y <br />
+      &amp;= \frac{1}{m} (XP)^T (XP) <br />
+      &amp;= \frac{1}{m} P^T X^T(XP) <br />
+      &amp;= P^T \frac{1}{m} X^T X P <br />
+      &amp;= P^T C P \tag{5} 
+\end{align}]</p>
+
+<p>Since \(D\) is a covariance matrix that contains variances and covariances of the new feature variables vector, 
+our objective is to find a \(P\) such that any two random variables of this new feature variables vector have zero covariance.
+In addition, because \(D\) has a smaller dimension than \(C\), 
+we also want this new feature variables vector to retain as much information as possible from the original dataset. 
+Given \(r\) real values such that \(\lambda_1 \geq \lambda_2 \dots \lambda_r\),
+we want D to be a diagonal covariance matrix:</p>
+
+<p>[\begin{align}
+    D &amp;= 
+    \begin{bmatrix}
+		\lambda_1 &amp; 0 &amp; \dots  &amp; 0 <br />
+		0 &amp; \lambda_2 &amp; \dots  &amp; 0 <br />
+		\vdots &amp; \vdots &amp; \ddots &amp; \vdots <br />
+		0 &amp; 0 &amp; \dots  &amp; \lambda_r  <br />
+    \end{bmatrix} \tag{6} <br />
+\end{align}]</p>
+
+<p>This process of finding \(P\) that turns D into a diagonal matrix is called diagonalization in linear algebra (see <a href="https://en.wikipedia.org/wiki/Diagonalizable_matrix#Diagonalization">Diagonalizable matrix</a>).
+It involves eigendecomposition of matrix \(C\), which happens to be a real symmetric matrix in this case. 
+So if we apply eigendecomposition on \(C\), we get:</p>
+
+<p>[\begin{align}
+    C &amp;= P D P^T \tag{7}
+\end{align}]</p>
+
+<p>where \(P\) is an orthogonal matrix.</p>
+
+<h3 id="relationship-with-svd"><strong>Relationship with SVD</strong></h3>
+
+<p>It’s also common to solve PCA problem with singular value decomposition. First, let’s apply SVD on \(X\):</p>
+
+<p>[\begin{align}
+    X &amp;= U \Sigma V^T \tag{8}
+\end{align}]</p>
+
+<p>For \(X^T X\), we have:</p>
+
+<p>[\begin{align}
+    X^T X &amp;= (U \Sigma V^T)^T U \Sigma V^T <br />
+          &amp;= V \Sigma^T U^T U \Sigma V^T <br />
+          &amp;= V \Sigma^T \Sigma V^T \tag{$U^T U = I$} <br />
+          &amp;= V \Sigma \Sigma V^T \tag{$\Sigma^T = \Sigma$, because $\Sigma$ is a symmetric matrix} <br />
+          &amp;= V \Sigma^2 V^T  \tag{9}
+\end{align}]</p>
+
+<p>Given (7) and (9), it’s not difficult to see that \(P = V\) and \(m D = \Sigma^2\), where \(m\) is a constant. 
+This means we can solve PCA by only applying SVD on \(X\), without calculating \(X^T X\).</p>
+
+:ET

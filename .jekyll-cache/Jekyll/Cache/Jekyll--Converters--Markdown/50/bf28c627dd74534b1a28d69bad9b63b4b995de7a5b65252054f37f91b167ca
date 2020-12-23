@@ -1,0 +1,95 @@
+I"ß<h4 id="abstract"><strong>Abstract</strong></h4>
+<p>In this post, we derive the bias-variance decomposition of mean square error for regression.</p>
+
+<h4 id="reference"><strong>Reference</strong></h4>
+
+<p><a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff">Bias-variance tradeoff</a></p>
+
+<h3 id="regression-decomposition"><strong>Regression Decomposition</strong></h3>
+<p>In regression analysis, itâ€™s common to decompose the observed value as following:</p>
+
+<p>[y_x = f_x + \epsilon_{x} \quad \epsilon_{x} \sim \mathcal{N}(0,\,\sigma^{2}) \tag{0}]</p>
+
+<p>where the true regression \(f_x\) is regarded as a constant given \(x\). 
+The error (or the data noise) \(\epsilon_{x}\) is independent of \(f_x\)
+with the assumption that \(\epsilon_{x}\) follows a Gaussian distribution of mean 0 and variance \(\sigma^2\). 
+Noticed that (0) is only a description of the data.
+When we replace \(f_x\) with its estimation \(\hat{f}_x\), (0) turns into a more practical form:</p>
+
+<p>[y_x = \hat{f}_x + r_x \tag{1}]</p>
+
+<p>Where the estimation of the true regression \(\hat{f}_x\) is regarded as a non-constant given \(x\), 
+and the residual \(r_x\) describes the gap between \(y_x\) and \(\hat{f}_x\).
+Based on (0) and (1), we can make the following observations:</p>
+
+<p>[\begin{align}
+    \mathrm{E} (f_x) &amp;= f_x \tag{if c is constant, $\mathrm{E}(c) = c$} <br />
+    \mathrm{E} (\epsilon_{x}) &amp;= 0 \tag{Gaussian assumption} <br />
+    \mathrm{Var} (f_x) &amp;= 0 \tag{constant has 0 variance} <br />
+	\mathrm{Var} (\epsilon_{x}) &amp;= \sigma^2 \tag{Gaussian assumption}
+\end{align}]</p>
+
+<p>[\begin{align}
+	\mathrm{E} (y_x) &amp;= \mathrm{E} (f_x + \epsilon_{x}) \ 
+	                 &amp;= \mathrm{E} (f_x) + \mathrm{E} (\epsilon_{x}) <br />
+	                 &amp;= \mathrm{E} (f_x) <br />
+	                 &amp;= f_x \tag{2} <br />
+\end{align}]</p>
+
+<p>[\begin{align}
+	\mathrm{Var} (y_x) &amp;= \mathrm{Var}(f_x + \epsilon_{x}) \ 
+	                 &amp;= \mathrm{Var}(f_x) + \mathrm{Var}(\epsilon_{x}) \tag{0 covariance for independent variables} <br />
+	                 &amp;= \mathrm{Var}(\epsilon_{x}) <br />
+	                 &amp;= \sigma^2 \tag{3} <br />
+\end{align}]</p>
+
+<h3 id="bias-variance-decomposition"><strong>Bias-variance decomposition</strong></h3>
+<p>Using (2) and (3), we can show that why minimizing mean squared error for regression problem is useful. 
+For the derivation, we need a few more identities related to expectation and variance. 
+Given any two independent random variable x, y, and a constant c, we have:</p>
+
+<p>[\begin{align}
+    \mathrm{E}\big[x^2\big] &amp;= \mathrm{Var}\big[x\big] + \mathrm{E}\big[x\big]^2 \tag{4} <br />
+    \mathrm{E}\big[xy\big] &amp;= \mathrm{E}\big[x\big] \mathrm{E}\big[y\big] \tag{5} <br />
+    \mathrm{E}\big[cx\big] &amp;= c \mathrm{E}\big[x\big] \tag{6} <br />
+\end{align}]</p>
+
+<p>Begin with the definition of mean squared error; we can rewrite it in the form of expected value:</p>
+
+<p>[\frac{1}{N}\sum_i^N (y_i - \hat{f}_i)^2 = \mathrm{E} \big[ (y_x - \hat{f}_x)^2 \big] \tag{Mean Squared Error}]</p>
+
+<p>By expanding \((y_x - \hat{f}_x)^2\), we get</p>
+
+<p>[\begin{align}
+	\mathrm{E} \big[ (y_x - \hat{f}<em>x)^2 \big] 
+	&amp;= \mathrm{E} \big[ y_x^2 + \hat{f}_x^2 - 2 y_x \hat{f}_x \big] \ 
+	&amp;= \mathrm{E} \big[ y_x^2 \big] + \mathrm{E} \big[ \hat{f}_x^2 \big] - 2 \mathrm{E} \big[ y_x \hat{f}_x \big] \tag{using (6)}<br />
+	&amp;= \mathrm{E} \big[ y_x^2 \big] + \mathrm{E} \big[ \hat{f}_x^2 \big] - 2 \mathrm{E} \big[ (f_x + \epsilon</em>{x}) \hat{f}<em>x \big] \tag{from (0)}<br />
+	&amp;= \mathrm{E} \big[ y_x^2 \big] + \mathrm{E} \big[ \hat{f}_x^2 \big] - 2 \mathrm{E} \big[ f_x \hat{f}_x \big] - 2 \mathrm{E} \big[ \epsilon</em>{x} \hat{f}_x \big] <br />
+\end{align}]</p>
+
+<p>Noted that \(2 \mathrm{E} \big[ \epsilon_{x} \hat{f}_x \big] = 2 \mathrm{E} \big[ \epsilon_{x} \big] \mathrm{E} \big[ \hat{f}_x \big] = 0\) 
+because \(\epsilon_{x}\) is independent of \(\hat{f}_x\) and \(\mathrm{E} \big[ \epsilon_{x} \big] = 0\)
+\(\begin{align}
+    \mathrm{E} \big[ (y_x - \hat{f}_x)^2 \big] 
+    &amp;= \mathrm{E} \big[ y_x^2 \big] + \mathrm{E} \big[ \hat{f}_x^2 \big] - 2 \mathrm{E} \big[ f_x \hat{f}_x \big] \\
+    &amp;= \mathrm{Var} \big[ y_x \big] + \mathrm{E} \big[y_x \big]^2 + \mathrm{Var} \big[ \hat{f}_x \big] + \mathrm{E} \big[ \hat{f}_x \big]^2  - 2 f_x \mathrm{E} \big[ \hat{f}_x \big] \tag{using (4), (5)}\\
+    &amp;= \mathrm{Var} \big[ y_x \big] + f_x^2 + \mathrm{Var} \big[ \hat{f}_x \big]  + \mathrm{E} \big[ \hat{f}_x \big]^2 - 2 \hat{f}_x \mathrm{E} \big[ y_x \big] \tag{using (2)} \\
+	&amp;= \mathrm{Var} \big[ y_x \big] + \mathrm{Var} \big[ \hat{f}_x \big] + (f_x^2  - 2 \hat{f}_x \mathrm{E} \big[ y_x \big] + \mathrm{E} \big[ \hat{f}_x \big]^2) \tag{rearrange}\\
+	&amp;= \mathrm{Var} \big[ y_x \big] + \mathrm{Var} \big[ \hat{f}_x \big] + (f_x  - \mathrm{E} \big[ \hat{f}_x \big])^2 \\
+	&amp;= \sigma^2 + \mathrm{Var} \big[ \hat{f}_x \big] + (f_x  - \mathrm{E} \big[ \hat{f}_x \big])^2 \tag{7}
+\end{align}\)</p>
+
+<p>And we reach our final form (7) which is the sum of data noise variance \(\sigma^2\), 
+prediction variance \(\mathrm{Var} \big[ \hat{f}_x \big]\) 
+and the squared prediction bias \((f_x  - \mathrm{E} \big[ \hat{f}_x \big])^2\). 
+Such result is the bias-variance decomposition.</p>
+
+<h4 id="why-variance-matter-in-regression"><strong>Why variance matter in regression?</strong></h4>
+<p>Lowing the prediction bias certainly gives the model higher accuracy on the training dataset; 
+however, to obtain similar performance outside of training dataset, 
+we want to prevent the model from overfitting the training dataset. 
+Given that the true regression has zero variance, 
+a robust model should have prediction variance as small as possible, 
+and this is consistent with the objective of the mean squared error.</p>
+:ET

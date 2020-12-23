@@ -1,0 +1,146 @@
+I"�<h4 id="abstract"><strong>Abstract</strong></h4>
+
+<p>This post shows how to derive the derivative of common neural network modules such as linear transformation, softmax cross entropy loss and some activation functions step by step.</p>
+
+<h4 id="notations"><strong>Notations</strong></h4>
+
+<p>[\begin{align}
+	&amp; \vec{W_{a<em>}} \tag{row a of Matrix W} <br />
+	&amp; \vec{W_{</em>a}} \tag{column a of Matrix W}
+\end{align}]</p>
+
+<h4 id="techniques-for-derivation"><strong>Techniques for derivation</strong></h4>
+
+<p>[\begin{align}
+	(\frac{f}{g})^{‘} &amp;= \frac{f^{‘}g + fg^{‘}}{g^2} \tag{the quotient rule} <br />
+	(\sum_{i=1}^{n} f_i)^{‘} &amp;= {f_1}^{‘}+{f_2}^{‘}+ …{f_n}^{‘} \tag{derivative of summation} <br />
+	(\log f)^{‘} &amp;= \frac{1}{f} \tag{when log base = e} <br />
+	\frac{df}{dg} &amp;= \frac{df}{dh} \frac{dh}{dg} \tag{chain rule} <br />
+\end{align}]</p>
+
+<h2 id="linear-transformation"><strong>Linear Transformation</strong></h2>
+
+<h4 id="forward"><strong>Forward</strong></h4>
+
+<p>[\begin{align}
+	k &amp;\in R \tag{size of the mini-batch} <br />
+	x &amp;\in R^{k \times m} \tag{the input of linear transformation} <br />
+	y &amp;\in R^{k \times n} \tag{the output of linear transformation} <br />
+	W &amp;\in R^{m \times n} \tag{the weight matrix} <br />
+	b &amp;\in R^{n} \tag{the bias term} <br />
+	L &amp;\in R \tag{scalar loss of the model} <br />
+	y &amp;= xW + b \tag{common alternative of y=Wx} 
+\end{align}]</p>
+
+<h4 id="get-fracdldx-and-fracdldw"><strong>Get \(\frac{dL}{dx}\) and \(\frac{dL}{dW}\)</strong></h4>
+
+<p>[\begin{align}
+	\frac{dL}{dx_{a,b}} &amp;= \sum_i^{k} \sum_j^{n} \frac{dL}{dy_{i,j}} \frac{dy_{i,j}}{dx_{a,b}} \tag{summation for all connected intermediate variables}<br />
+	&amp;= \vec{\frac{dL}{dy}<em>{a*}} \cdot \vec{W</em>{b*}} \tag{dot product of row a of $\frac{dL}{dy}$ and row b of W}<br />
+\end{align}]</p>
+
+<p>[\begin{align}
+	\frac{dL}{dx} &amp;=
+	\begin{bmatrix}
+		\frac{dL}{dx_{1,1}} &amp; \frac{dL}{dx_{1,2}} &amp; \dots  &amp; \frac{dL}{dx_{1,m}} <br />
+		\frac{dL}{dx_{2,1}} &amp; \frac{dL}{dx_{2,2}} &amp; \dots  &amp; \frac{dL}{dx_{2,m}} <br />
+		\vdots &amp; \vdots &amp; \ddots &amp; \vdots <br />
+		\frac{dL}{dx_{k,1}} &amp; \frac{dL}{dx_{k,2}} &amp; \dots  &amp; \frac{dL}{dx_{k,m}}
+	\end{bmatrix} \tag{$\frac{dL}{dx} \in R^{k \times m}$} <br />
+	&amp;=
+	\begin{bmatrix}
+		\vec{\frac{dL}{dy}<em>{1*}} \cdot \vec{W</em>{1<em>}} &amp; \vec{\frac{dL}{dy}_{1</em>}} \cdot \vec{W_{2<em>}} &amp; \dots  &amp; \vec{\frac{dL}{dy}_{1</em>}} \cdot \vec{W_{m<em>}} <br />
+		\vec{\frac{dL}{dy}_{2</em>}} \cdot \vec{W_{1<em>}} &amp; \vec{\frac{dL}{dy}_{2</em>}} \cdot \vec{W_{2<em>}} &amp; \dots  &amp; \vec{\frac{dL}{dy}_{2</em>}} \cdot \vec{W_{m<em>}} <br />
+		\vdots &amp; \vdots &amp; \ddots &amp; \vdots <br />
+		\vec{\frac{dL}{dy}_{k</em>}} \cdot \vec{W_{1<em>}} &amp; \vec{\frac{dL}{dy}_{k</em>}} \cdot \vec{W_{2<em>}} &amp; \dots  &amp; \vec{\frac{dL}{dy}_{k</em>}} \cdot \vec{W_{m<em>}}
+	\end{bmatrix} \tag{substitution} <br />
+	&amp;=
+	\begin{bmatrix}
+		\vec{\frac{dL}{dy}_{1</em>}} <br />
+		\vec{\frac{dL}{dy}<em>{2*}} <br />
+		\vdots <br />
+		\vec{\frac{dL}{dy}</em>{k<em>}}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\vec{W_{1</em>}} &amp; \vec{W_{2<em>}} &amp; \dots &amp; \vec{W_{m</em>}} 
+	\end{bmatrix}
+	= \frac{dL}{dy} W^T \tag{$\frac{dL}{dy} \in R^{k \times n}, W^T \in R^{n \times m}$} <br />
+	\frac{dL}{dW} &amp;= x^T \frac{dL}{dy} \tag{similarly} <br />
+	\frac{dL}{db} &amp;= 
+	\begin{bmatrix}
+		sum(\vec{\frac{dL}{dy}<em>{*1}}) &amp; sum(\vec{\frac{dL}{dy}</em>{<em>2}}) &amp; \dots &amp; sum(\vec{\frac{dL}{dy}_{</em>m}})
+	\end{bmatrix} \tag{$sum(\vec{\frac{dL}{dy}<em>{*a}}) = \sum_i^{k} \frac{dL}{dy</em>{i, a}}$}
+\end{align}]</p>
+
+<h2 id="softmax-and-cross-entropy-loss"><strong>Softmax and Cross Entropy Loss</strong></h2>
+
+<h4 id="forward-process"><strong>Forward Process</strong></h4>
+
+<p>[\begin{align}
+	h &amp;\in R^{n} \tag{the input of softmax, usually the last hidden layer} <br />
+	o &amp;\in R^{n} \tag{the output of softmax, all elements sum up to 1} <br />
+	t &amp;\in R^{n} \tag{target one-hot vector, only one element is 1} <br />
+	o &amp;= softmax(h) \tag{softmax function} <br />
+	o_i &amp;= \frac{e^{h_i}}{\sum_{j}^{n} e^{h_j}} \tag{element-wise softmax output $o_i$ given h} <br />
+	E &amp;= -\sum_{i}^{n} t_i \log o_i \tag{cross entropy produce loss given o and t}
+\end{align}]</p>
+
+<h4 id="get-fracd-ed-h-when-e---sum_int_ilogo_i-and-o_i--fraceh_isum_jn-eh_j"><strong>Get \(\frac{d E}{d h}\) when \(E = -\sum_{i}^{n}{t_i\log(o_i)}\) and \(o_i = \frac{e^{h_i}}{\sum_{j}^{n} e^{h_j}}\)</strong></h4>
+
+<p>[\begin{align}
+	\frac{d E}{d h_i} &amp;= \sum_{a}^{n} \frac{d E}{d o_a} \frac{d o_a}{d h_i} \tag{chain rule} <br />
+	\frac{d E}{d o_a} &amp;= -\frac{t_a}{o_a} \tag{for $1 \leq a \leq n$} <br />
+	\frac{d o_a}{d h_i} &amp;= \frac{e^{h_a} \sum_{j}^{n} e^{h_j} - e^{h_a} e^{h_a}}{(\sum_{j}^{n} e^{h_j})^2} \tag{for a = i, the quotient rule} <br />
+	&amp;= \frac{e^{h_a}}{\sum_{j}^{n} e^{h_j}} - (\frac{e^{h_a}}{\sum_{j}^{n} e^{h_j}})^2 \tag{for a = i} <br />
+	&amp;= o_a (1 - o_a) \tag{for a = i} <br />
+	\frac{d o_a}{d h_i} &amp;= \frac{0 - e^{h_a} e^{h_i}}{(\sum_{j}^{n} e^{h_j})^2} \tag{for $a \neq$ i, the quotient rule} <br />
+	&amp;= - \frac{e^{h_a}}{\sum_{j}^{n} e^{h_j}} \frac{e^{h_i}}{\sum_{j}^{n} e^{h_j}} \tag{for $a \neq$ i} <br />
+	&amp;= - o_a o_i \tag{for $a \neq$ i} <br />
+	\frac{d E}{d h_i} &amp;= \sum_{a}^{n} \frac{d E}{d o_a} \frac{d o_a}{d h_i} \tag{chain rule} <br />
+	&amp;= \frac{d E}{d o_i} \frac{d o_i}{d h_i} + \sum_{a \neq i}^{n} \frac{d E}{d o_a} \frac{d o_a}{d h_i} \tag{separate a=i and a $\neq$ i} <br />
+	&amp;= -\frac{t_i}{o_i} o_i(1-o_i) + \sum_{a \neq i}^{n} -\frac{t_a}{o_a} (-o_a o_i) \tag{substitution} <br />
+	&amp;= -t_i + t_i o_i + \sum_{a \neq i}^n t_a o_i \tag{elimination} <br />
+	&amp;= -t_i + \sum_{a}^n t_a o_i \tag{merge $t_i o_i$ with summation term} <br />
+	&amp;= -t_i + o_i \sum_{a}^n t_a \tag{take constant $o_i$ out of summation term} <br />
+	&amp;= o_i - t_i \tag{summation evaluate to 1} <br />
+	\frac{d E}{d h} &amp;= o -t \tag{combine element-wise results}
+\end{align}]</p>
+
+<h2 id="activation-functions"><strong>Activation Functions</strong></h2>
+
+<h4 id="sigmoid"><strong>Sigmoid</strong></h4>
+
+<p>[\begin{align}
+	Sigmoid(x_i) &amp;= \frac{1}{1+e^{-x_i}} \tag{element-wise operation on x} <br />
+	\frac{dSigmoid(x_i)}{dx_i} &amp;= (1+e^{-x_i})^{-2} (1+e^{-x_i})’ \tag{chain rule, let $g(x)=1+e^{-x_i}$} <br />
+	&amp;= (1+e^{-x_i})^{-2} -e^{-x_i} \tag{chain rule, let $g(x)=e^{-x_i}$} <br />
+	&amp;= \frac{1}{1+e^{-x_i}} \frac{-e^{-x_i}}{1+e^{-x_i}} \tag{rewrite} <br />
+	&amp;= \frac{1}{1+e^{-x_i}} \frac{1+e^{-x_i}-1}{1+e^{-x_i}} \tag{trick: x = 1+x-1} <br />
+	&amp;= \frac{1}{1+e^{-x_i}} (\frac{1+e^{-x_i}}{1+e^{-x_i}} - \frac{1}{1+e^{-x_i}}) \tag{rewrite} <br />
+	&amp;= Sigmoid(x_i)(1-Sigmoid(x_i)) \tag{substitution}
+\end{align}]</p>
+
+<h4 id="tanh"><strong>Tanh</strong></h4>
+
+<p>[\begin{align}
+	Tanh(x_i) &amp;= \frac{e^{x_i} + e^{-x_i}}{e^{x_i} - e^{-x_i}} \tag{element-wise operation on x}
+\end{align}]</p>
+
+<p>[\begin{align}
+	\frac{dTanh(x_i)}{dx_i} &amp;= \frac{(e^{x_i} + e^{-x_i})(e^{x_i} + e^{-x_i}) + (e^{x_i} - e^{-x_i})(e^{x_i} - e^{-x_i})}{(e^{x_i} + e^{-x_i})^2} \tag{the quotient rule} <br />
+	\frac{dTanh(x_i)}{dx_i} &amp;= 1 + (\frac{e^{x_i} - e^{-x_i}}{e^{x_i} + e^{-x_i}})^2 \tag{$(\frac{e^{x_i} + e^{-x_i}}{e^{x_i} + e^{-x_i}})^2 = 1$} <br />
+	\frac{dTanh(x_i)}{dx_i} &amp;= 1 + tan(x_i)^2 \tag{substitution}
+\end{align}]</p>
+
+<h4 id="relu"><strong>ReLU</strong></h4>
+
+<p>[\begin{align}
+	ReLU(x_i) &amp;= max(0, x_i) \tag{element-wise operation on x}<br />
+	\frac{dReLU(x_i)}{dx_i} &amp;= 
+	\begin{cases}
+		1 &amp; \text{when $x_i &gt; 0$} <br />
+		0 &amp; \text{otherwise}
+	\end{cases} \nonumber
+\end{align}]</p>
+
+:ET

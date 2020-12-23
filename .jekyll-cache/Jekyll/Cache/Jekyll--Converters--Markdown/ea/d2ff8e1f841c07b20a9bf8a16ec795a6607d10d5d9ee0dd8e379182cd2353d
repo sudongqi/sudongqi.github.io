@@ -1,0 +1,34 @@
+I"S<h4 id="highlight-code-snippets"><strong>Highlight code snippets</strong></h4>
+
+<p>An example of code snippets in Jekyll:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">print_hello_world</span><span class="p">():</span> 
+    <span class="c1"># print "hello world!" in terminal
+</span>    <span class="k">print</span><span class="p">(</span><span class="s">'hello world!'</span><span class="p">)</span></code></pre></figure>
+
+<h4 id="display-math-equations-using-mathjax"><strong>Display math equations using MathJax</strong></h4>
+
+<p>An example of math equations in Jekyll (MathJax):</p>
+
+\[y(x_i) = f(x_i) + \epsilon(x_i)\]
+
+<p>MathJax can be imported externally inside the <code class="language-plaintext highlighter-rouge">header</code> of <code class="language-plaintext highlighter-rouge">/_layouts/x.html</code> to allow posts that use <code class="language-plaintext highlighter-rouge">x.html</code> as layout template to display math
+equations as follow:</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/x-mathjax-config"</span><span class="nt">&gt;</span>
+    <span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+        <span class="na">jax</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">input/TeX</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">output/HTML-CSS</span><span class="dl">"</span><span class="p">],</span>
+        <span class="na">displayAlign</span><span class="p">:</span> <span class="dl">"</span><span class="s2">left</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">displayIndent</span><span class="p">:</span> <span class="dl">"</span><span class="s2">5em</span><span class="dl">"</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;script 
+    </span><span class="na">src=</span><span class="s">"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"</span> 
+    <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure>
+
+<p>If you use the default Jekyll theme <a href="https://github.com/jekyll/minima">minima</a>, 
+you can also download the default <code class="language-plaintext highlighter-rouge">post.html</code> from <a href="https://github.com/jekyll/minima">minima</a> and add MathJax to it.
+This blog’s <a href="https://github.com/sudongqi/sudongqi.github.io">repo</a> provides a working example of Jekyll default theme (Minima) with MathJax installed.</p>
+
+:ET

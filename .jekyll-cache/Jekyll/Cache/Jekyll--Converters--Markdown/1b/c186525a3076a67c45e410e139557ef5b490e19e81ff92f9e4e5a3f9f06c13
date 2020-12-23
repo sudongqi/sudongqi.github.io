@@ -1,0 +1,76 @@
+I"�<h4 id="abstract"><strong>Abstract</strong></h4>
+<p>In this post we introduce an alternative view on Expectation Maximization using KL-divergence by Jianlin from
+<a href="https://kexue.fm">https://kexue.fm</a>. Unlike the common view on EM using Jensen’s inequality, the derivation of EM using KL-divergence 
+is shorter and more intuitive.</p>
+
+<h4 id="reference"><strong>Reference</strong></h4>
+
+<p><a href="https://kexue.fm/archives/5239">Jianlin’s post</a> (written in Chinese)</p>
+
+<h3 id="kl-divergence-and-maximum-likelihood-estimation"><strong>KL divergence and maximum likelihood estimation</strong></h3>
+<p>From our <a href="/p4">previous post</a> about EM, 
+we know that EM’s objective is to maximizing the expected log likelihood of the training dataset. 
+In here, we want to expand the concept to show that 
+such optimization is a special case of a more general form of optimization: minimizing the KL divergence.
+Given two probability distribution \(p(x)\) and \(q(x)\), KL measure how close \(q(x)\) is to \(p(x)\)</p>
+
+<p>[\begin{align}
+    {KL} (p(x) \parallel q(x)) &amp;= \sum_x p(x) \log \frac{p(x)}{q(x)} \tag{KL divergence}
+\end{align}]</p>
+
+<p>To derive EM using the concept of KL divergence, 
+let’s say we want to use \(p_{\theta}(x)\) to approximate the underlying distribution of the training dataset \(p_{true}(x)\). 
+Given that \(p_{true}(x)\) is known (as constant), 
+minimizing the KL divergence is equivalent to maximizing the expected log likelihood of the training dataset.</p>
+
+<p>[\begin{align}
+    \theta_{best} &amp;= \operatorname<em>{argmin}_{\theta} {KL} (p_{true}(x) \parallel p_{\theta}(x)) <br />
+                  &amp;= \operatorname</em>{argmin}<em>{\theta} \sum_x p</em>{true}(x) \log \frac{p_{true}(x)}{p_{\theta}(x)} <br />
+                  &amp;= \operatorname<em>{argmin}_{\theta} \sum_x p_{true}(x) \log p_{true}(x) - \sum_x p_{true}(x) \log p_{\theta}(x) \tag{first term is constant} <br />
+                  &amp;= \operatorname</em>{argmin}<em>{\theta} - \sum_x p</em>{true}(x) \log p_{\theta}(x) \tag{Cross Entropy} <br />
+                  &amp;= \operatorname*{argmax}<em>{\theta} \mathbb{E}_x (\log p</em>{\theta}(x)) \tag{0}</p>
+
+<p>\end{align}]</p>
+
+<p>where (0) is the objective of the general EM algorithm.</p>
+
+<h3 id="kl-divergence-of-joint-probability"><strong>KL divergence of joint probability</strong></h3>
+<p>Incorporating the hidden variable Z that are used to explain X, we can rewrite our objective using the joint probability of X and Z</p>
+
+<p>[\begin{align}
+    &amp; {KL} (p_{true}(x, z) \parallel p_{\theta}(x, z)) <br />
+    &amp;= \sum_{x, z} p_{true}(x, z) \log \frac{p_{true}(x, z)}{p_{\theta}(x, z)} <br />
+    &amp;= \sum_{x} p_{true}(x) \sum_{z} p_{true}(z | x) \log \frac{p_{true}(z|x)p_{true}(x)}{p_{\theta}(z|x)p_{\theta}(x)} <br />
+    &amp;= \mathbb{E}<em>x \Big[ \sum</em>{z} p_{true}(z | x) \log \frac{p_{true}(z|x)p_{true}(x)}{p_{\theta}(z|x)p_{\theta}(x)} \Big] <br />
+    &amp;= \mathbb{E}<em>x \Big[ \sum</em>{z} p_{true}(z | x) \log \frac{p_{true}(z|x)}{p_{\theta}(z|x)p_{\theta}(x)} + \sum_{z} p_{true}(z | x) \log p_{true}(x) \Big] <br />
+    &amp;= \mathbb{E}<em>x \Big[ \sum</em>{z} p_{true}(z | x) \log \frac{p_{true}(z|x)}{p_{\theta}(z|x)p_{\theta}(x)} \Big] + \mathbb{E} \Big[ \log p_{true}(x) \Big] <br />
+    &amp;= \mathbb{E}<em>x \Big[ \sum</em>{z} p_{true}(z | x) \log \frac{p_{true}(z|x)}{p_{\theta}(z|x)p_{\theta}(x)} \Big] + C \tag{1}
+\end{align}]</p>
+
+<h3 id="expectation-maximization-from-kl-divergence"><strong>Expectation maximization from KL divergence</strong></h3>
+
+<p>To minimize (1), there are two terms we can adjust: \(p_{true}(z | x)\) and \(p_{\theta}(z|x)p_{\theta}(x)\). 
+Similar to EM, we can optimize one part assuming the other part is constant and we can do this interchangeably.
+So, if we assume \(p_{\theta}(z|x)p_{\theta}(x)\) is known, \(p_{true}(z | x)\) can be adjust to minimize (1) as follow</p>
+
+<p>[\begin{align}
+    p_{true}(z | x) &amp;= \operatorname<em>{argmin}_{p_{true}(z | x)} \mathbb{E}_x \Big[ \sum_{z} p_{true}(z | x) \log \frac{p_{true}(z|x)}{p_{\theta}(z|x)p_{\theta}(x)} \Big] <br />
+                    &amp;= \operatorname</em>{argmin}<em>{p</em>{true}(z | x)} \mathbb{E}<em>x \Big[ \sum</em>{z} p_{true}(z | x) \log \frac{p_{true}(z|x)}{p_{\theta}(z|x)} - \sum_{z} p_{true}(z | x) \log p_{\theta}(x) \Big] <br />
+                    &amp;= \operatorname<em>{argmin}_{p_{true}(z | x)} \mathbb{E}_x \Big[ {KL} (p_{true}(z | x) \parallel p_{\theta}(z | x)) - C \Big] <br />
+                    &amp;= \operatorname</em>{argmin}<em>{p</em>{true}(z | x)} \mathbb{E}<em>x \Big[ {KL} (p</em>{true}(z | x) \parallel p_{\theta}(z | x)) \Big] \tag{2} <br />
+                    &amp;=  p_{\theta}(z | x) \tag{E-step}
+\end{align}]</p>
+
+<p>from (2) to (E-step), we need to use the fact that \({KL}(p_{\theta}(z \vert x) \parallel p_{\theta}(z \vert x)) = 0\).
+For M step, we assume \(p_{true}(z \vert x)\) is constant and is equal to \(p_{\theta}(z \vert x)\)</p>
+
+<p>[\begin{align}
+    \theta_{new} &amp;= \operatorname<em>{argmin}_{\theta} \mathbb{E}_x \Big[ \sum_{z} p_{true}(z | x) \log \frac{p_{true}(z|x)}{p_{\theta}(z|x)p_{\theta}(x)} \Big] <br />
+                 &amp;= \operatorname</em>{argmin}<em>{\theta} \mathbb{E}_x \Big[\sum</em>{z} p_{true}(z | x) \log p_{true}(z | x) - \sum_{z} p_{true}(z | x) \log {p_{\theta}(z|x)p_{\theta}(x)} \Big] <br />
+                 &amp;= \operatorname<em>{argmax}_{\theta} \mathbb{E}_x \Big[\sum_{z} p_{true}(z | x) \log {p_{\theta}(z|x)p_{\theta}(x)} \Big] <br />
+                 &amp;= \operatorname</em>{argmax}<em>{\theta} \mathbb{E}_x \Big[\sum</em>{z} p_{\theta}(z | x) \log p_{\theta}(x, z) \Big] \tag{M-step}
+\end{align}]</p>
+
+<p>The above results are identical to the defintion of EM algorithm.</p>
+
+:ET
