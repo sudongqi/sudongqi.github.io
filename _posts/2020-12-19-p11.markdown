@@ -29,7 +29,7 @@ HPSG也是这种词汇化(lexicalized)思路下发展出来的语法。
 
 <center><img src="../assets/p11/hand.JPG" title="interpolations" height="300"></center>
 
-Lexicon包含了HPSG中绝大部分的和语言惯例和语法限制信息，以上图的动词hand为例，这样的一个结构被称为lexical entry，
+Lexicon包含了HPSG中绝大部分的关于语言惯例和语法限制的信息，以上图的动词hand为例，这样的一个结构被称为lexical entry，
 每一个lexical entry都包含了3样重要的信息：syntax(SYN)，argument-structure (ARG-ST)和semantics (SEM)。<br><br>
 
 其中SYN用来记录这个词的基本属性，例如词性，单复数，时态等等，
