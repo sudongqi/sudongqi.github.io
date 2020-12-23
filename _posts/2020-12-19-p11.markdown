@@ -132,7 +132,7 @@ in the vast majority of cases. A grammar of a language must list these associati
 The original conception of the lexicon in modern linguistics was simply as the repository of such arbitrary information.
 <br><br>
 
-从计算语言学家的角度来看，任何语言都包含了大量看起来随机而且没有规律的东西，
+从计算语言学家的角度来看，任何语言都包含了大量看起来随机而且没有规律的知识，
 而语言形式和语义之间的联系很大程度上是惯例决定的(自古以来的用法)。
 一个能把从语言形式(form)转换到语义(semantics)的系统必须要记录大量的琐碎的知识，
 这个观察是推动的计算语法词汇化的最重要的推动力。
@@ -145,6 +145,6 @@ HPSG对语法正确性的要求更是让其实用性受到致命的打击，
 但是从另外一个观点看，HPSG这种对形式和语义的清晰分层，是深度学习难以做到的。
 深度学习端对端的思路从形式作为输入开始，一直到特定应用的决策(例如问答系统的多选题)输出，
 中间并没有允许语义层存在的空间，更不用说语义层上的语用层(pragmatics)。
-这样的学习是非常低效，这也助长了近年来热门的神经网络越做越大的思路。
+这样的学习是非常低效的(low data efficiency)，这也助长了近年来神经网络越做越大，数据越用越多的思路。
 如何把语义层和语用层植入语言理解系统，一定是解开自然语言理解的必经之路。
 
