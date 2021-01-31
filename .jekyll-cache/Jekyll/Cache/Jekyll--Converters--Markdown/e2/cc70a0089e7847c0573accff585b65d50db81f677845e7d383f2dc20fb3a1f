@@ -1,0 +1,94 @@
+I"U<h4 id="abstract"><strong>Abstract</strong></h4>
+<p>This is an introduction of Proximal Policy Optimization, the current best reinforcement learning algorithm in 2020, 
+for machine learning folks like me who are not familiar with reinforcement learning.</p>
+
+<h4 id="references"><strong>References</strong></h4>
+
+<p><a href="https://www.youtube.com/watch?v=z95ZYgPgXOY&amp;ab_channel=Hung-yiLee">Hung-yi Lee’s lecture (in Chinese)</a></p>
+
+<h4 id="reinforcement-learnings-problem-definition"><strong>Reinforcement Learning’s problem definition</strong></h4>
+
+<center><img src="../assets/p12/RL.jpg" title="interpolations" height="300" /></center>
+
+<p>The problem definition of reinforcement learning was based on the interactions of the environment and the agent.
+As shown above, each state represent the observation made by the agent on the environment. Given each state,
+the agent will take an action based on its knowledge that maximize the future rewards. 
+Together, the interaction will generate a sequence of states and actions. 
+If we denote such sequence as \(\tau\),</p>
+
+\[\tau = \{ s_1, a_1, s_2, a_2, s_3, a_3 ... \}\]
+
+<p>we can write down the expected rewards of \(\tau\) since \(\tau\) itself is a random variable.</p>
+
+\[\bar{R_{\theta}} = 
+    E_{\tau \sim p_\theta(\tau)} \big[ R(\tau) \big] = \sum_{\tau} R(\tau) p_{\theta}(\tau)
+    ,\,\,\, R(\tau) = \sum_{i}^{T} r_t\]
+
+<p>In the case of deep reinforcement learning, 
+\(\theta\) is the neural network weights we want to adjust to maximize the expected rewards.</p>
+
+<h4 id="policy-gradient"><strong>Policy Gradient</strong></h4>
+
+<p>To optimize this expected rewards, we can take the derivative of it,</p>
+
+\[\begin{align}
+     \nabla \bar{R_{\theta}} &amp;= \sum_{\tau} R(\tau) \nabla p_{\theta}(\tau) \\
+                             &amp;= \sum_{\tau} R(\tau) p_{\theta}(\tau) \nabla \log p_{\theta}(\tau) \tag{$ \nabla \log f(x) = \frac{\log f(x)}{f(x)}$} \\
+                             &amp;= E_{\tau \sim p_\theta(\tau)} \big[ R(\tau) \nabla \log p_\theta(\tau) \big] \\
+                             &amp;\approx \frac{1}{N} \sum_{n=1}^{N} R(\tau^n) \nabla \log p_\theta(\tau^n) \\
+                             &amp;= \frac{1}{N} \sum_{n=1}^{N} \sum_{t=1}^{T_n} R(\tau^n) \nabla \log p_\theta(a_t^n | s_t^n) \tag{$ \nabla \log p_\theta(\tau^n) = \sum_{t=1}^{T_n} \nabla \log p_\theta(a_t^n | s_t^n)  $}\\
+\end{align}\]
+
+<p>and then adjust \(\theta\) with gradient descent,</p>
+
+\[\theta \leftarrow \theta + \eta \nabla \bar{R_{\theta}}\]
+
+<p>This is equivalent to maximizing the log likelihood of action at each time step weighted by the rewards of a sequence.
+However, we also maximize the wrong actions using this objective function, but under the normalization of softmax, 
+the action with a higher reward will always have a higher probability of emission in the ideal scenario. 
+Another issue is that in practice, we won’t be able to sample all actions; to eliminate the bias from the partial sampling, 
+we can subtract a positive constant term \(b\) to punish the low rewards action,</p>
+
+\[\nabla \bar{R_{\theta}} \approx \frac{1}{N} \sum_{n=1}^{N} \sum_{t=1}^{T_n} (R(\tau^n) - b) \nabla \log p_\theta(a_t^n | s_t^n)\]
+
+<p>An alternative solution is to replace the reward term with a critic network,</p>
+
+\[\nabla \bar{R_{\theta}} \approx \frac{1}{N} \sum_{n=1}^{N} \sum_{t=1}^{T_n} A^{\theta}(s_t, a_t) \nabla \log p_\theta(a_t^n | s_t^n)\]
+
+<h4 id="on-policy-versus-off-policy"><strong>On-policy versus off-policy</strong></h4>
+
+<p>The optimization approach above is called on-policy optimization,
+but in practice, off-policy optimization was used because the number of passes 
+required by gradient descent usually exceeds the number of sample data.
+In such setting, one would want to optimize \(\theta\) based on the data sampled by another agent with weight \(\theta_2\).
+It works with the following procedure:</p>
+
+<p>       1. sample data \(D\) using agent with weight \(\theta_2\) <br />
+       2. optimizing agent with weight \(\theta\) using the data \(D\) <br />
+       3. sync up weights: \(\theta_2 \leftarrow \theta\)</p>
+
+<h4 id="importance-sampling"><strong>Importance Sampling</strong></h4>
+<p>Since now we have a mismatch between the weight we want to optimize and the weight for sampling, 
+we need to use a technique called importance sampling to correct our objective function; 
+a expected value under distribution \(p\) can be rewritten using another distribution \(q\),</p>
+
+\[E_{x \sim p} [f(x)] = \int f(x) p(x) dx = \int f(x) \frac{p(x)}{q(x)} q(x) dx = E_{x \sim q} [f(x) \frac{p(x)}{q(x)}]\]
+
+<p>Look back at our policy gradient,</p>
+
+\[\nabla \bar{R_{\theta}} = E_{(a_t, s_t) \sim p_\theta(\tau)} [A^{\theta}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)]\]
+
+<p>If we rewrite it for \(\theta\) (learner agent) using importance sampling from \(\theta_2\) (agent in the environment), we get,</p>
+
+\[\begin{align}
+    \nabla \bar{R_{\theta}} &amp;= E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t, s_t) }{ p_{\theta}(a_t, s_t) } A^{\theta_2}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)] \\
+                              &amp;= E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) } A^{\theta_2}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)] \tag{$p_{\theta}(s_t) = p_{\theta_2}(s_t)$}\\
+\end{align}\]
+
+<p>After taking the integral of the above policy gradient, we will obtain the new objective function with importance sampling,</p>
+
+\[\begin{align}
+    \nabla \bar{R_{\theta}} &amp;= E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t, s_t) }{ p_{\theta}(a_t, s_t) } A^{\theta_2}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)] \\
+                              &amp;= E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) } A^{\theta_2}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)] \tag{$p_{\theta}(s_t) = p_{\theta_2}(s_t)$}\\
+\end{align}\]
+:ET

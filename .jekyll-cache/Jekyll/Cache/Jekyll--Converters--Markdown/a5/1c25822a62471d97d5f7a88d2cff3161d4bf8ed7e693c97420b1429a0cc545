@@ -1,0 +1,135 @@
+I"!<h4 id="abstract"><strong>Abstract</strong></h4>
+<p>This is a basic introduction of Proximal Policy Optimization (the best reinforcement learning algorithm in 2020) 
+for machine learning folks like me who are not familiar with reinforcement learning.</p>
+
+<h4 id="references"><strong>References</strong></h4>
+
+<p><a href="https://www.youtube.com/watch?v=OAKAZhFmYoI&amp;ab_channel=Hung-yiLee">Hung-yi Lee’s lecture (in Chinese)</a></p>
+
+<p><a href="https://arxiv.org/pdf/1707.06347.pdf">Proximal Policy Gradient (the paper)</a></p>
+
+<h4 id="reinforcement-learnings-problem-definition"><strong>Reinforcement Learning’s problem definition</strong></h4>
+
+<center><img src="../assets/p12/RL.jpg" title="interpolations" height="300" /></center>
+
+<p>The problem definition of reinforcement learning was based on the interactions of the environment and the agent.
+As shown above, each state represent the observation made by the agent on the environment. Given each state,
+the agent will take an action based on its knowledge that maximize the future rewards. 
+Together, the interaction will generate a sequence of states and actions. 
+If we denote such sequence as \(\tau\),</p>
+
+\[\tau = \{ s_1, a_1, s_2, a_2, s_3, a_3 ... \}\]
+
+<p>we can write down the expected rewards of \(\tau\) since \(\tau\) itself is a random variable.</p>
+
+\[\bar{R_{\theta}} = 
+    E_{\tau \sim p_\theta(\tau)} \big[ R(\tau) \big] = \sum_{\tau} R(\tau) p_{\theta}(\tau)
+    ,\,\,\, R(\tau) = \sum_{i}^{T} r_t\]
+
+<p>In the case of deep reinforcement learning, 
+\(\theta\) is the neural network weights we want to adjust to maximize the expected rewards.</p>
+
+<h4 id="policy-gradient"><strong>Policy Gradient</strong></h4>
+
+<p>To optimize this expected rewards, we can take the derivative of it,</p>
+
+\[\begin{align}
+     \nabla \bar{R_{\theta}} &amp;= \sum_{\tau} R(\tau) \nabla p_{\theta}(\tau) \\
+                             &amp;= \sum_{\tau} R(\tau) p_{\theta}(\tau) \nabla \log p_{\theta}(\tau) \tag{$ \nabla \log f(x) = \frac{\log f(x)}{f(x)}$} \\
+                             &amp;= E_{\tau \sim p_\theta(\tau)} \big[ R(\tau) \nabla \log p_\theta(\tau) \big] \\
+                             &amp;\approx \frac{1}{N} \sum_{n=1}^{N} R(\tau^n) \nabla \log p_\theta(\tau^n) \\
+                             &amp;= \frac{1}{N} \sum_{n=1}^{N} \sum_{t=1}^{T_n} R(\tau^n) \nabla \log p_\theta(a_t^n | s_t^n) \tag{$ \nabla \log p_\theta(\tau^n) = \sum_{t=1}^{T_n} \nabla \log p_\theta(a_t^n | s_t^n)  $}\\
+\end{align}\]
+
+<p>and then adjust \(\theta\) with gradient descent,</p>
+
+\[\theta \leftarrow \theta + \eta \nabla \bar{R_{\theta}}\]
+
+<p>This is equivalent to maximizing the log likelihood of action at each time step weighted by the rewards of a sequence.
+However, we also maximize the wrong actions using this objective function, but under the normalization of softmax, 
+the action with a higher reward will always have a higher probability of emission in the ideal scenario. 
+Another issue is that in practice, we won’t be able to sample all actions; to eliminate the bias from the partial sampling, 
+we can subtract a positive constant term \(b\) to punish the low rewards action,</p>
+
+\[\nabla \bar{R_{\theta}} \approx \frac{1}{N} \sum_{n=1}^{N} \sum_{t=1}^{T_n} (R(\tau^n) - b) \nabla \log p_\theta(a_t^n | s_t^n)\]
+
+<p>An alternative solution is to replace the reward term with a critic network,</p>
+
+\[\nabla \bar{R_{\theta}} \approx \frac{1}{N} \sum_{n=1}^{N} \sum_{t=1}^{T_n} A^{\theta}(s_t, a_t) \nabla \log p_\theta(a_t^n | s_t^n)\]
+
+<h4 id="on-policy-versus-off-policy"><strong>On-policy versus off-policy</strong></h4>
+
+<p>The optimization approach above is called on-policy optimization,
+but in practice, off-policy optimization was used because the number of passes 
+required by gradient descent usually exceeds the number of sample data.
+In such setting, one would want to optimize \(\theta\) based on the data sampled by another agent with weight \(\theta_2\).
+It works with the following procedure:</p>
+
+<p>       1. sample data \(D\) using agent with weight \(\theta_2\) <br />
+       2. optimizing agent with weight \(\theta\) using the data \(D\) (multiple times) <br />
+       3. sync up weights: \(\theta_2 \leftarrow \theta\)</p>
+
+<h4 id="importance-sampling"><strong>Importance Sampling</strong></h4>
+<p>Since \(\theta\) and \(\theta_2\) are different, 
+we need to use a technique called importance sampling to correct our objective function; 
+an expected value under distribution \(p\) can be rewritten using another distribution \(q\),</p>
+
+\[E_{x \sim p} [f(x)] = \int f(x) p(x) dx = \int f(x) \frac{p(x)}{q(x)} q(x) dx = E_{x \sim q} [f(x) \frac{p(x)}{q(x)}]\]
+
+<p>Look back at our policy gradient,</p>
+
+\[\nabla \bar{R_{\theta}} = E_{(a_t, s_t) \sim p_\theta(\tau)} [A^{\theta}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)]\]
+
+<p>If we rewrite it for \(\theta\) (the learner agent) using importance sampling from \(\theta_2\) (the agent interact with the environment), we get,</p>
+
+\[\begin{align}
+    \nabla \bar{R_{\theta}} &amp;= E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t, s_t) }{ p_{\theta}(a_t, s_t) } A^{\theta_2}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)] \\
+                              &amp;= E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) } A^{\theta_2}(s_t, a_t) \nabla \log p_\theta(a_t | s_t)] \tag{$p_{\theta}(s_t) = p_{\theta_2}(s_t)$}\\
+\end{align}\]
+
+<p>After taking the integral of the above policy gradient, we get the new objective function in the setting of importance sampling,</p>
+
+\[\bar{R_{\theta}} = E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) } A^{\theta_2}(s_t, a_t) ] \tag{ $ \nabla \log f(x) = \frac{\log f(x)}{f(x)}$ }\]
+
+<h4 id="issue-of-importance-sampling"><strong>Issue of Importance Sampling</strong></h4>
+
+<p>We have already showed above that the adaptation of important sampling doesn’t change the expected value of our objective function,</p>
+
+\[E_{x \sim p} [f(x)] = E_{x \sim q} [f(x) \frac{p(x)}{q(x)}]\]
+
+<p>However, the variance of these two settings are different,</p>
+
+\[Var_{x \sim p} [f(x)] \neq Var_{x \sim q} [f(x) \frac{p(x)}{q(x)}]\]
+
+<p>The variance under the vanilla setting is,</p>
+
+\[Var_{x \sim p} [f(x)] = E_{x \sim p} [f(x)^2] - (E_{x \sim p} [f(x)])^2 \tag{definition of variance}\]
+
+<p>The variance under the important sampling setting is,</p>
+
+\[\begin{align}
+    Var_{x \sim q} [f(x) \frac{p(x)}{q(x)}] &amp;= E_{x \sim q} [(f(x) \frac{p(x)}{q(x)})^2] - (E_{x \sim q} [f(x) \frac{p(x)}{q(x)}])^2 \\
+                                            &amp;= E_{x \sim p} [f(x)^2 \frac{p(x)}{q(x)}] - (E_{x \sim p} [f(x)])^2
+\end{align}\]
+
+<p>When \(p(x)\) is very different from \(q(x)\), the effectiveness of the important sampling technique will be reduced.
+In practice, we don’t want \(p(x)\) to be closer to \(q(x)\)</p>
+
+<h4 id="proximal-policy-gradient"><strong>Proximal Policy Gradient</strong></h4>
+<p>To constraint the difference between \(p(x)\) and \(q(x)\), Proximal Policy Gradient adds a regularization term on the importance sampling objective function,</p>
+
+\[\bar{R^{\theta}_{PPO}} = E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [\frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) } A^{\theta_2}(s_t, a_t) ] + \beta KL (\theta, \theta_2)\]
+
+<p>where \(KL (\theta, \theta_2)\) is the KL-divergence of \(p_{\theta} (a_t \vert s_t)\) and \(p_{\theta_2} (a_t \vert s_t)\), and \(\beta\) is a hyperparameter.
+Intuitively, when we build a new agent based on a previously trained agent, we don’t want the new agent to be too much different from the starting point.
+This allows the algorithm to make finer but incremental update to our model.
+Alternatively, we cloud also use clipping to implement this idea,</p>
+
+\[\bar{R^{\theta}_{PPO_2}} = E_{(a_t, s_t) \sim p_{\theta_2}(\tau)} [min(
+    \frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) } A^{\theta_2}(s_t, a_t), \, clip(\frac{ p_{\theta_2}(a_t | s_t) }{ p_{\theta}(a_t | s_t) }, 1-\epsilon, 1+\epsilon) A^{\theta_2}(s_t, a_t), 
+    )]\]
+
+<p>When \(A^{\theta_2}(s_t, a_t) &gt; 0\) (good action), we set the upper limit of \(\frac{ p_{\theta_2}(a_t \vert s_t) }{ p_{\theta}(a_t \vert s_t) }\) to be \(1 + \epsilon\).
+When \(A^{\theta_2}(s_t, a_t) &lt; 0\) (bad action), we set the lower limit of \(\frac{ p_{\theta_2}(a_t \vert s_t) }{ p_{\theta}(a_t \vert s_t) }\) to be \(1 - \epsilon\).</p>
+
+:ET

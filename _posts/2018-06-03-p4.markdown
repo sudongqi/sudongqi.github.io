@@ -8,7 +8,7 @@ categories: ML
 #### __Abstract__
 In this post we introduce a common view on Expectation Maximization using Jensen's inequality.
 
-#### __Reference__
+#### __References__
 [Andrew's note]: http://cs229.stanford.edu/notes/cs229-notes8.pdf
 [wikipedia]: https://en.wikipedia.org/wiki/Jensen%27s_inequality
 
