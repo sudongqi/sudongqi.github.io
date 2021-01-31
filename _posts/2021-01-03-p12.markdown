@@ -20,7 +20,7 @@ for machine learning folks like me who are not familiar with reinforcement learn
 
 #### __Reinforcement Learning's problem definition__
 
-<center><img src="../assets/p12/RL.jpg" title="interpolations" height="300"></center>
+<center><img src="../assets/p12/RL.JPG" height="300"></center>
 
 The problem definition of reinforcement learning was based on the interactions of the environment and the agent.
 As shown above, each state represent the observation made by the agent on the environment. Given each state,

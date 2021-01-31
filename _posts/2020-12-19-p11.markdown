@@ -28,7 +28,7 @@ HPSG也是这种词汇化(lexicalized)思路下发展出来的语法。
 
 #### __Lexicon__
 
-<center><img src="../assets/p11/hand.JPG" title="interpolations" height="300"></center>
+<center><img src="../assets/p11/hand.JPG" height="300"></center>
 
 Lexicon包含了HPSG中绝大部分的关于语言惯例和语法限制的信息，以上图的动词hand为例，这样的一个结构被称为lexical entry，
 每一个lexical entry都包含了3样重要的信息：syntax(SYN)，argument-structure (ARG-ST)和semantics (SEM)。<br><br>
@@ -73,8 +73,8 @@ Lexicon包含了HPSG中绝大部分的关于语言惯例和语法限制的信息
 这个规则可以适用于所有的transitive verb，也就是及物动词。
 
 <center>
-<img src="../assets/p11/hand.JPG" title="interpolations" height="250">
-<img src="../assets/p11/handed.JPG" title="interpolations" height="300">
+<img src="../assets/p11/hand.JPG" height="250">
+<img src="../assets/p11/handed.JPG" height="300">
 </center>
 
 与计算机科学里的面向对象编程类似，HPSG里的lexical entry可以继承自一个更笼统的父类，然后再通过lexical rule进行转变，
@@ -86,12 +86,12 @@ Lexicon包含了HPSG中绝大部分的关于语言惯例和语法限制的信息
 HPSG的教科书([1])里只用了一页半列就列举完了能覆盖绝大多数句子的基本grammar rules：
 
 <center>
-<img src="../assets/p11/HSR.JPG" title="interpolations" width="300">
-<img src="../assets/p11/HCR.JPG" title="interpolations" width="300">
-<img src="../assets/p11/HMR.JPG" title="interpolations" width="300">
-<img src="../assets/p11/HFR.JPG" title="interpolations" width="330">
-<img src="../assets/p11/ImperativeR.JPG" title="interpolations" width="350">
-<img src="../assets/p11/COORD.JPG" title="interpolations" width="350">
+<img src="../assets/p11/HSR.JPG" width="300">
+<img src="../assets/p11/HCR.JPG" width="300">
+<img src="../assets/p11/HMR.JPG" width="300">
+<img src="../assets/p11/HFR.JPG" width="330">
+<img src="../assets/p11/ImperativeR.JPG" width="350">
+<img src="../assets/p11/COORD.JPG" width="350">
 </center>
 
 其中有"H"标记的就是HPSG中心词(head daughter)。
@@ -106,8 +106,8 @@ HPSG的教科书([1])里只用了一页半列就列举完了能覆盖绝大多�
     2. 从下到上用中心词和grammar rules形成新的节点，直到根节点被建立
 
 <center>
-<img src="../assets/p11/the_fbi_continues_to_visit_lee.JPG" title="interpolations" width="400">
-<img src="../assets/p11/lee_continues_to_be_visited_by_the_fbi.JPG" title="interpolations" width="400">
+<img src="../assets/p11/the_fbi_continues_to_visit_lee.JPG" width="400">
+<img src="../assets/p11/lee_continues_to_be_visited_by_the_fbi.JPG" width="400">
 </center>
     
 上面的两幅图简单地描述了句法分析的过程，其中的动词continues是中心词中的中心词，所以整个句子的索引(INDEX)和continues的索引是一样的(都为s1)。
@@ -115,7 +115,7 @@ The FBI continues to visit lee (上图) 在被动语态下是 Lee continues to b
 顺着同样的过程，根节点都得出了一模一样的SEM值，如下图：
 
 <center>
-<img src="../assets/p11/top_node_sem.JPG" title="interpolations" width="400">
+<img src="../assets/p11/top_node_sem.JPG" width="400">
 </center>
 
 SEM值里的RESTR(restriction)是包括了所有终端节点的实体关系组（predication)，而且RESTR是一个集合的概念，
