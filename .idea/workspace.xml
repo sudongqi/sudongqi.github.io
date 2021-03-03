@@ -20,10 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="79b692eb-caf6-49c1-b456-2fa26f58ae98" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.jekyll-cache/Jekyll/Cache/Jekyll--Converters--Markdown/6d/9ff4480f4beed28882bd8f92e71f5ccd22911c514755ecd5255f52dd29530c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.jekyll-cache/Jekyll/Cache/Jekyll--Converters--Markdown/d5/a7a53e6a50d8362206de1b975c55d3a56b7421369c732b31d56cc71ce5babf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_posts/2020-12-19-p11.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2020-12-19-p11.markdown" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/_posts/2021-01-03-p12.markdown" beforeDir="false" afterPath="$PROJECT_DIR$/_posts/2021-01-03-p12.markdown" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/p12/RL.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/p12/RL.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/about.md" beforeDir="false" afterPath="$PROJECT_DIR$/about.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

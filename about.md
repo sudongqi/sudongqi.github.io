@@ -3,15 +3,18 @@ layout: page
 title: About
 permalink: /about/
 ---
-Author: [Dongqi Su](http://sudongqi.com/#/)
+My home page: [sudongqi.com](http://sudongqi.com/#/)
 
 #### __Talk is cheap! Show me the math!__
 This blog collects, refines, and presents math concepts behind machine learning in a minimalistic way.
 
-#### __Some posts are in Chinese?__
-Because non-math topics are more enjoyable to write in Chinese to me, 
-and don't worry, someday we will have the perfect translator. 
-(or you can use the current Google translator; it's very good)
+#### __Other topics__
+I plan to write more posts related to NLU and PCG as I started to manage my time better recently.
+
+#### __Languages__
+Sometimes I write in Chinese because Chinese is my native language. 
+To me, writing in Chinese will always be more comfortable and more natural. 
+That being said, I prefer to write in English for more technical topics.
 
 #### __Theme of this blog__
 A modified Jekyll Minima theme:
